@@ -1,26 +1,26 @@
 
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-	
+
 	/**
 	 * Programer haryanto.duwi
 	 * Email haryanto.duwi@gmail.com
 	 * Github duwiharyanto.guthub.io
 	 */
 
-//include controller master 
+//include controller master
 include APPPATH.'controllers/Core.php';
-require './plugins/phpexcel/vendor/autoload.php'; 
+require './plugins/phpexcel/vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx;	
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as writer;
 
 class Dashboard extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('Model','Crud');
-		$this->load->library('Duwi');		
+		$this->load->library('Duwi');
 		$this->duwi->cekadmin();
 		$this->duwi->listakses($this->session->userdata('user_level'));
 	}
@@ -36,7 +36,7 @@ class Dashboard extends CI_Controller {
 	private function global_set($data){
 		//OVERWRITE UNTUK MULTI INDEX VIEW
 		if(isset($data['overwriteview'])){
-			$overwriteview=$data['overwriteview'];		
+			$overwriteview=$data['overwriteview'];
 			$menu_submenu=$data['menu_submenu'];
 		}else{
 			$overwriteview="views/Dashboard/Dashboard/index.php";
@@ -85,7 +85,7 @@ class Dashboard extends CI_Controller {
 			########################################################
 			// $file='user_foto';
 			// if($_FILES[$file]['name']){
-			// 	if($this->duwi->gambarupload($this->path,$file)){					
+			// 	if($this->duwi->gambarupload($this->path,$file)){
 			// 		$fileupload=$this->upload->data('file_name');
 			// 		$data[$file]=$fileupload;
 			// 	}else{
@@ -94,7 +94,7 @@ class Dashboard extends CI_Controller {
 			// 		//exit();
 			// 	}
 			// }
-			//print_r($data);		
+			//print_r($data);
 
 			$query=array(
 				'data'=>$this->security->xss_clean($data),
@@ -102,10 +102,10 @@ class Dashboard extends CI_Controller {
 			);
 			$insert=$this->Crud->insert($query);
 			if($insert){
-				$this->session->set_flashdata('success','simpan berhasil');	
+				$this->session->set_flashdata('success','simpan berhasil');
 				$dt['success']='input data berhasil';
 			}else{
-				$this->session->set_flashdata('error','simpan gagal');	
+				$this->session->set_flashdata('error','simpan gagal');
 				$dt['error']='input data error';
 			}
 			return $this->output->set_output(json_encode($dt));
@@ -126,9 +126,9 @@ class Dashboard extends CI_Controller {
 			'url'=>$this->default_url,
 		);
 		//LOAD FUNCTION GLOBAL SET
-		$global=$this->global_set($global_set);		
+		$global=$this->global_set($global_set);
 		//USER LOGIN
-		$userloginharian="select DATE_FORMAT(created_at,'%d-%m-%Y') AS tanggal,log_aksi, COUNT(*) AS jumlah From log WHERE log_aksi='login' GROUP BY DATE_FORMAT(created_at,'%Y%m%d') ORDER BY created_at DESC LIMIT 7";	
+		$userloginharian="select DATE_FORMAT(created_at,'%d-%m-%Y') AS tanggal,log_aksi, COUNT(*) AS jumlah From log WHERE log_aksi='login' GROUP BY DATE_FORMAT(created_at,'%Y%m%d') ORDER BY created_at DESC LIMIT 7";
 		$r_loginharian=$this->Crud->hardcode($userloginharian)->result();
 		$ar_loginharian=array();
 		$ar_tglloginharian=array();
@@ -156,21 +156,21 @@ class Dashboard extends CI_Controller {
 		];
 
 		//Kegiatan
-		$qkegiatan="select kegiatan_nama, kegiatan_tanggal From reg_kegiatan ORDER BY kegiatan_id DESC LIMIT 7";	
+		$qkegiatan="select kegiatan_nama, kegiatan_tanggal From reg_kegiatan ORDER BY kegiatan_id DESC LIMIT 7";
 		$r_kegiatan=$this->Crud->hardcode($qkegiatan)->result();
 
 		$qjumkegiatan="select kegiatan_id From reg_kegiatan";
-		$qjumpendaftar="select * From reg_registrasi order by reg_id desc";		
+		$qjumwarga="select * From warga order by warga_id desc";
 		$data=array(
 			'global'=>$global,
 			'grafikloginuser'=>$grafikloginuser,
 			'grafikregistrasi'=>$grafikregistrasi,
 			'kegiatan'=>$r_kegiatan,
 			'jumkegiatan'=>$this->Crud->hardcode($qjumkegiatan)->result(),
-			'jumpendaftar'=>$this->Crud->hardcode($qjumpendaftar)->result(),		
+			'warga'=>$this->Crud->hardcode($qjumwarga)->result(),
 		);
 		// print_r($data);
 		// exit();
-		$this->load->view($this->default_view.'tabel',$data);		
-	}	
+		$this->load->view($this->default_view.'tabel',$data);
+	}
 }

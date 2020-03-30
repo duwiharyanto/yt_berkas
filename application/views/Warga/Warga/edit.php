@@ -8,12 +8,12 @@
                 <div class="panel-body">
 			  		<form id="forminput" method="POST" onsubmit="update()" action="javascript:void(0)" url="<?= base_url($global->url.'edit')?>" enctype="multipart/form-data">
 						<div class="row">
-							<div class="col-sm-6">		
+							<div class="col-sm-6">
 								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 		  						<div class="form-group d-none">
 			  						<label>id</label>
 			  						<input required readonly type="text" name="id" class="hide form-control" title="Harus di isi" value="<?=$data->warga_id?>">
-			  					</div>										      						
+			  					</div>
 								<div class="form-group">
 									<label>Nomor Rumah</label>
 									<input required type="text" name="warga_nomorrumah" class="form-control" title="Harus di isi"  value="<?=$data->warga_nomorrumah?>">
@@ -32,7 +32,7 @@
 				      					<label style="padding-right: 20px">
 				      						<input <?= strtolower($data->warga_statustempattinggal)=='sewa' ? 'checked':''?> required name="warga_statustempattinggal" value="Sewa" type="radio">
 				      						Sewa
-				      					</label>				      					
+				      					</label>
 				      				</div>
 								</div>
 								<div class="form-group">
@@ -45,7 +45,7 @@
 				      					<label style="padding-right: 20px">
 				      						<input <?=$data->warga_statusktp=='luar_wilayah_modalan_RT.03' ? 'checked':''?> required name="warga_statusktp" value="luar_wilayah_modalan_RT.03" type="radio">
 				      						Luar Wilayah Modalan RT.03
-				      					</label>				      					
+				      					</label>
 				      				</div>
 								</div>
 								<div class="form-group">
@@ -58,7 +58,7 @@
 				      					<label style="padding-right: 20px">
 				      						<input <?=$data->warga_domisili=='luar_wilayah_modalan_RT.03' ? 'checked':''?> required name="warga_domisili" value="luar_wilayah_modalan_RT.03" type="radio">
 				      						Luar Wilayah Modalan RT.03
-				      					</label>				      					
+				      					</label>
 				      				</div>
 								</div>
 								<div class="form-group">
@@ -79,7 +79,7 @@
 				      					<label style="padding-right: 20px">
 				      						<input <?=$data->warga_jaminankesehatan=='jamkesnas' ? 'checked':''?> required name="warga_jaminankesehatan" value="jamkesnas" type="radio">
 				      						JAMKESNAS
-				      					</label>				      							      					
+				      					</label>
 				      				</div>
 								</div>
 								<div class="form-group">
@@ -96,7 +96,7 @@
 				      					<label style="padding-right: 20px">
 				      						<input <?=$data->warga_sktm=='ya' ? 'checked':''?> required name="warga_sktm" value="ya" type="radio">
 				      						Ya
-				      					</label>					
+				      					</label>
 				      				</div>
 								</div>
 							</div>
@@ -104,7 +104,7 @@
 								<div class="form-group">
 									<label>Nomor KK</label>
 									<input required type="text" name="warga_nomorkk" class="form-control" title="Harus di isi" value="<?=$data->warga_nomorkk?>">
-								</div>	
+								</div>
 								<div class="form-group">
 									<label>Nomor KTP</label>
 									<input required type="text" name="warga_nomorktp" class="form-control" title="Harus di isi" value="<?=$data->warga_nomorktp?>">
@@ -128,7 +128,7 @@
 								</div>
 								<div class="form-group">
 									<label>Alamat * <br><small class="text-danger">Isi sesuai Domisili</small></label>
-									<textarea class="form-control" required name="warga_alamatktp2" rows="8"><?=$data->warga_alamatktp ?></textarea>									
+									<textarea class="form-control" required name="warga_alamatktp2" rows="8"><?=$data->warga_alamatktp ?></textarea>
 								</div>
 								<div class="form-group">
 									<label>Jenis Kelamin</label>
@@ -140,9 +140,9 @@
 										<label style="padding-right: 20px">
 											<input <?=$data->warga_jeniskelamin=='Perempuan' ? 'checked':''?> required name="warga_jeniskelamin" value="Perempuan" type="radio" >
 											Perempuan
-										</label>															
-									</div>									
-								</div>	
+										</label>
+									</div>
+								</div>
 								<div class="form-group">
 									<label>Tempat Lahir</label>
 									<textarea class="form-control" required name="warga_tempatlahir" rows="3"><?=$data->warga_tempatlahir?></textarea>
@@ -158,11 +158,11 @@
 								<div class="form-group">
 									<label>Status Nomor</label>
 									<input type="text" name="warga_statusnomor" value="<?=$data->warga_statusnomor?>" class="form-control">
-									<p class="tex-muted">Contoh : Aktif Whatsap, Aktif Telepon</p>			
+									<p class="tex-muted">Contoh : Aktif Whatsap, Aktif Telepon</p>
 								</div>
 								<div class="form-group">
 									<label>Email</label>
-									<input required name="warga_email" class="form-control " type="text" value="<?=$data->warga_email?>"></input>
+									<input  name="warga_email" class="form-control " type="text" value="<?=$data->warga_email?>"></input>
 								</div>
 								<div class="form-group">
 									<label>Agama</label>
@@ -240,27 +240,27 @@
 										<label style="padding-right: 20px">
 											<input <?=$data->warga_npwp=='tidak' ? 'checked':''?> required name="warga_npwp" value="tidak" type="radio" >
 											Tidak
-										</label>			
-									</div>			
+										</label>
+									</div>
 								</div>
 								<div class="form-group">
 									<label>Nomor NPWP</label>
 									<input type="text" name="warga_nonpwp" class="form-control" value="<?=$data->warga_nonpwp?>">
-								</div>								
+								</div>
 							</div>
-						</div>			  			
+						</div>
 			  			<div class="row">
-			  				<div class="col-sm-12">						
+			  				<div class="col-sm-12">
 			  					<div class="form-group">
 			  						<button type="submit" value="submit" name="submit" class="btn btn-warning btn-block btn-flat btn-md">Update</button>
-			  					</div>														
+			  					</div>
 			  				</div>
 			  			</div>
-			  		</form>	
+			  		</form>
                 </div>
             </div>
-        </div>		
-	
-	</div> 
+        </div>
+
+	</div>
 </div>
 <?php include 'action.php'?>

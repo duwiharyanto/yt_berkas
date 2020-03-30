@@ -8,11 +8,11 @@
 		}
 		if($global->detail){
 			echo '
-			<a  href="'.site_url($segment.'/detail/'.md5($rowid)).'" class="btn btn-primary btn-circle" data-toggle="tooltip" title="Detail">
-				<i class="fa fa-folder-open"></i>
+			<a href="javascript:void(0)"  url="'.site_url($global->url.'/detail').'" id="'.$rowid.'" class="detail btn btn-primary btn-circle" data-toggle="tooltip" title="Detail">
+				<i class="fa fa-info"></i>
 			</a>';
 		}
-		if($global->extendlink){
+		if($global->qrcode){
 			echo '
 			<button type="button" onclick="popuplaporan(\''.base_url($global->url.'qrcode/'.md5($rowid)).'\')" class="btn btn-success btn-circle" data-toggle="tooltip" title="Share" >
 				<i class="fa fa-qrcode"></i>
@@ -20,11 +20,11 @@
 			';
 		}
 		if($global->delete){
-			echo '	
+			echo '
 			<button type="button" data-toggle="tooltip" title="" class="hapus btn btn-danger btn-circle" data-original-title="Hapus" url="'.base_url($global->url.'hapus/').'"  id="'.$rowid.'">
 				<i class="fa fa-trash"></i>
 			</button>
-			'; 
-		}		
+			';
+		}
 	}
 ?>

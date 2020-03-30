@@ -55,7 +55,7 @@ class Warga extends CI_Controller {
 			'download'=>false,
 			'add'=>true,
 			'import'=>true,
-			'extendlink'=>false,
+			'qrcode'=>false,
 		);
 		return (object)$data; //MEMBUAT ARRAY DALAM BENTUK OBYEK
 	}
@@ -70,7 +70,7 @@ class Warga extends CI_Controller {
 	public function uji()
 	{
 		$input='Helo world';
-		$this->duwi->ujicobalib($input);	
+		$this->duwi->ujicobalib($input);
 	}
 	public function index()
 	{
@@ -118,7 +118,7 @@ class Warga extends CI_Controller {
 			########################################################
 			// $file='reg_foto';
 			// if($_FILES[$file]['name']){
-			// 	if($this->duwi->gambarupload($this->path,$file)){					
+			// 	if($this->duwi->gambarupload($this->path,$file)){
 			// 		$fileupload=$this->upload->data('file_name');
 			// 		$data[$file]=$fileupload;
 			// 	}else{
@@ -133,10 +133,10 @@ class Warga extends CI_Controller {
 			);
 			$insert=$this->Crud->insert($query);
 			if($insert){
-				$this->session->set_flashdata('success','simpan berhasil');	
+				$this->session->set_flashdata('success','simpan berhasil');
 				$dt['success']='input data berhasil';
 			}else{
-				// $this->session->set_flashdata('error','simpan gagal');	
+				// $this->session->set_flashdata('error','simpan gagal');
 				$dt['error']='input data error';
 			}
 			return $this->output->set_output(json_encode($dt));
@@ -154,7 +154,7 @@ class Warga extends CI_Controller {
 			'url'=>$this->default_url,
 		);
 		//LOAD FUNCTION GLOBAL SET
-		$global=$this->global_set($global_set);		
+		$global=$this->global_set($global_set);
 		//PROSES TAMPIL DATA
 		$query=array(
 			'tabel'=>$this->master_tabel,
@@ -164,7 +164,7 @@ class Warga extends CI_Controller {
 			'global'=>$global,
 			'data'=>$this->Crud->read($query)->result(),
 		);
-		$this->load->view($this->default_view.'tabel',$data);		
+		$this->load->view($this->default_view.'tabel',$data);
 	}
 	public function edit(){
 		$global_set=array(
@@ -176,12 +176,12 @@ class Warga extends CI_Controller {
 		if($this->input->post('warga_nomorrumah')){
 			//PROSES SIMPAN
 			$data=array(
-				'warga_nomorrumah'=>$this->input->post('kegiatan_tempat'),
-				'warga_statustempattinggal'=>$this->input->post('kegiatan_tempat'),
-				'warga_statusktp'=>$this->input->post('kegiatan_tempat'),
-				'warga_domisili'=>$this->input->post('kegiatan_tempat'),
-				'warga_jaminankesehatan'=>$this->input->post('kegiatan_tempat'),
-				'warga_nomorjaminankesehatan'=>$this->input->post('kegiatan_tempat'),
+				'warga_nomorrumah'=>$this->input->post('warga_nomorrumah'),
+				'warga_statustempattinggal'=>$this->input->post('warga_statustempattinggal'),
+				'warga_statusktp'=>$this->input->post('warga_statusktp'),
+				'warga_domisili'=>$this->input->post('warga_domisili'),
+				'warga_jaminankesehatan'=>$this->input->post('warga_jaminankesehatan'),
+				'warga_nomorjaminankesehatan'=>$this->input->post('warga_nomorjaminankesehatan'),
 				'warga_sktm'=>$this->input->post('kegiatan_tempat'),
 				'warga_namakeluarga'=>$this->input->post('kegiatan_tempat'),
 				'warga_alamatnamakeluarga'=>$this->input->post('kegiatan_tempat'),
@@ -213,7 +213,7 @@ class Warga extends CI_Controller {
 			// 	if($this->gambarupload($this->path,$file)){
 			// 		if($id){
 			// 			$this->hapus_file($id);
-			// 		}					
+			// 		}
 			// 		$fileupload=$this->upload->data('file_name');
 			// 		$data[$file]=$fileupload;
 			// 	}else{
@@ -221,7 +221,7 @@ class Warga extends CI_Controller {
 			// 		return $this->output->set_output(json_encode($dt));
 			// 		//exit();
 			// 	}
-			// }			
+			// }
 			$query=array(
 				'data'=>$this->security->xss_clean($data),
 				'tabel'=>$this->master_tabel,
@@ -229,13 +229,13 @@ class Warga extends CI_Controller {
 			);
 			$update=$this->Crud->update($query);
 			if($update){
-				//$this->session->set_flashdata('success','update data berhasil');	
+				//$this->session->set_flashdata('success','update data berhasil');
 				$dt['success']='Update data berhasil';
 			}else{
-				//$this->session->set_flashdata('error','update data gagal');	
+				//$this->session->set_flashdata('error','update data gagal');
 				$dt['error']='Update data gagal';
 			}
-			return $this->output->set_output(json_encode($dt));			
+			return $this->output->set_output(json_encode($dt));
 		}else{
 			$query=array(
 				'tabel'=>$this->master_tabel,
@@ -245,9 +245,9 @@ class Warga extends CI_Controller {
 				'data'=>$this->Crud->read($query)->row(),
 				'global'=>$global,
 			);
-			//$this->viewdata($data);			
+			//$this->viewdata($data);
 			$this->load->view($this->default_view.'edit',$data);
-		}			
+		}
 	}
 	public function importdatas(){
 		// echo "import";
@@ -299,7 +299,7 @@ class Warga extends CI_Controller {
 					'warga_pekerjaan'=>$sheetData[$i]['27'],
 					'warga_alamatbekerja'=>$sheetData[$i]['28'],
 					'warga_npwp'=>$sheetData[$i]['29'],
-					'warga_nonpwp'=>$sheetData[$i]['30'],  		
+					'warga_nonpwp'=>$sheetData[$i]['30'],
 		    	));
 		    }
 			$query=array(
@@ -307,15 +307,15 @@ class Warga extends CI_Controller {
 				'tabel'=>$this->master_tabel,
 			);
 			$insert=$this->Crud->insert_multiple($query);
-		}			
+		}
 		if($insert){
-			$this->session->set_flashdata('success','simpan berhasil');	
+			$this->session->set_flashdata('success','simpan berhasil');
 			$dt['success']='input data berhasil';
 		}else{
-			$this->session->set_flashdata('error','simpan gagal');	
+			$this->session->set_flashdata('error','simpan gagal');
 			$dt['error']='input data error';
 		}
-		//return $this->output->set_output(json_encode($dt));					
+		//return $this->output->set_output(json_encode($dt));
 		redirect(site_url($this->default_url));
 	}
 	public function add(){
@@ -323,7 +323,7 @@ class Warga extends CI_Controller {
 			'submenu'=>false,
 			'headline'=>'tambah data',
 			'url'=>$this->default_url, //AKAN DIREDIRECT KE INDEX
-		);	
+		);
 		$global=$this->global_set($global_set);
 		$q_level=[
 			'tabel'=>'level',
@@ -332,8 +332,8 @@ class Warga extends CI_Controller {
 			'level'=>$this->Crud->read($q_level)->result(),
 			'global'=>$global,
 			);
-		$this->load->view($this->default_view.'add',$data);		
-	}	
+		$this->load->view($this->default_view.'add',$data);
+	}
 	public function hapus(){
 		$id=$this->input->post('id');
 		#############################
@@ -351,7 +351,7 @@ class Warga extends CI_Controller {
 			// $dt['msg']='input data error';
 			$dt['msg']=$delete;
 		}
-		return $this->output->set_output(json_encode($dt));	
+		return $this->output->set_output(json_encode($dt));
 	}
 	public function downloadtemplate($file){
 		$this->downloadfile($this->pathformatimport,$file);
@@ -361,15 +361,15 @@ class Warga extends CI_Controller {
 			'headline'=>'Daftar Kegiatan',
 			'url'=>$this->default_url,
 		);
-		$global=$this->global_set($global_set);	
+		$global=$this->global_set($global_set);
 		$query=array(
 			'tabel'=>$this->master_tabel,
 			'order'=>array('kolom'=>$this->id,'orderby'=>'DESC'),
-		);			
+		);
 		$data=array(
 			'global'=>$global,
 			'data'=>$this->Crud->read($query)->result(),
-			'deskripsi'=>'dicetak dari sistem tanggal '.date('d-m-Y'), 
+			'deskripsi'=>'dicetak dari sistem tanggal '.date('d-m-Y'),
 			'atributsistem'=>$this->duwi->atributsistem(),
 		);
 		$view=$this->load->view($this->default_view.'cetak',$data,true);
@@ -379,17 +379,36 @@ class Warga extends CI_Controller {
 			'kertas'=>'A4-l',
 		];
 		$this->duwi->prosescetak($cetak);
-	}	
+	}
 	public function qrcode($id){
 		$isi=site_url('public/registrasi/index/'.$id);
 		$param=[
 			'path'=>'./upload/qrcode/',
 			'isi'=>$isi,
 			'namafile'=>$id,
-		];	
+		];
 		$url=$this->duwi->generateqrcode($param);
 		echo "<h2 style='text-align:center'>Scan QRcode</h2>";
 		echo "<img src='".$url."' width='300px' height='300px' style='display: block; margin-left: auto;margin-right:auto; margin-top:50px'></img>";
 		echo "<p style='text-align:center;margin-top:20px'>".$isi."</p>";
-	}	
+	}
+	public function detail(){
+		$id=$this->input->post('id');
+		$global_set=array(
+			'submenu'=>false,
+			'headline'=>'tambah data',
+			'url'=>$this->default_url, //AKAN DIREDIRECT KE INDEX
+		);
+		$global=$this->global_set($global_set);
+		$query=[
+			'tabel'=>$this->master_tabel,
+			'where'=>[['warga_id'=>$id]]
+		];
+		$r_query=$this->Crud->read($query)->row();
+		$data=[
+			'global'=>$global,
+			'data'=>$r_query
+		];
+		$this->load->view($this->default_view.'detail',$data);
+	}
 }

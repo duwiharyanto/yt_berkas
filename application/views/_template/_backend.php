@@ -12,20 +12,18 @@
     <title><?=ucwords($global->headline)?></title>
     <link href="<?=base_url()?>/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?=base_url()?>/plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
-    <link href="<?=base_url()?>/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">    
+    <link href="<?=base_url()?>/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
     <!-- Wizard CSS -->
-    <link href="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/css/wizard.css" rel="stylesheet">    
+    <link href="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/css/wizard.css" rel="stylesheet">
     <link href="<?=base_url()?>/plugins/bower_components/bootstrap-extension/css/bootstrap-extension.css" rel="stylesheet">
-    <link href="<?=base_url()?>/plugins/bower_components/custom-select/custom-select.css" rel="stylesheet" type="text/css" />    
+    <link href="<?=base_url()?>/plugins/bower_components/custom-select/custom-select.css" rel="stylesheet" type="text/css" />
     <link href="<?=base_url()?>/plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="<?=base_url()?>/plugins/bower_components/datatables/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="<?=base_url()?>/plugins/css/animate.css" rel="stylesheet">
-    <link href="<?=base_url()?>/plugins/css/style.css" rel="stylesheet"> 
+    <link href="<?=base_url()?>/plugins/css/style.css" rel="stylesheet">
     <link href="<?=base_url()?>/plugins/css/colors/blue.css" id="theme" rel="stylesheet">
     <link href="<?=base_url()?>/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
-    <link href="<?=base_url()?>/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" /> 
-
-
+    <link href="<?=base_url()?>/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
 
     <!-- jQuery -->
     <script src="<?=base_url()?>/plugins/bower_components/jquery/dist/jquery.min.js"></script>
@@ -45,7 +43,7 @@
     <script src="<?=base_url()?>/plugins/bower_components/datatables/vfs_fonts.js"></script>
     <script src="<?=base_url()?>/plugins/bower_components/datatables/buttons.colVis.min.js"></script>
     <script src="<?=base_url()?>/plugins/bower_components/datatables/buttons.html5.min.js"></script>
-    <script src="<?=base_url()?>/plugins/bower_components/datatables/buttons.print.min.js"></script>  
+    <script src="<?=base_url()?>/plugins/bower_components/datatables/buttons.print.min.js"></script>
     <script src="<?=base_url()?>/plugins/bower_components/custom-select/custom-select.min.js" type="text/javascript"></script>
     <script src="<?=base_url()?>/plugins/bower_components/toast-master/js/jquery.toast.js"></script>
     <!-- Sweet-Alert  -->
@@ -53,19 +51,19 @@
     <!-- Sparkline chart JavaScript -->
     <script src="<?=base_url()?>/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
     <script src="<?=base_url()?>/plugins/bower_components/jquery-sparkline/jquery.charts-sparkline.js"></script>
-    <script src="<?=base_url()?>/plugins/bower_components/skycons/skycons.js"></script>   
+    <script src="<?=base_url()?>/plugins/bower_components/skycons/skycons.js"></script>
     <!--Counter js -->
     <script src="<?=base_url()?>/plugins/bower_components/waypoints/lib/jquery.waypoints.js"></script>
     <script src="<?=base_url()?>/plugins/bower_components/counterup/jquery.counterup.min.js"></script>
     <!-- Chart JS -->
-    <script src="<?=base_url()?>/plugins/bower_components/Chart.js/Chart.min.js"></script> 
+    <script src="<?=base_url()?>/plugins/bower_components/Chart.js/Chart.min.js"></script>
     <!-- Form Wizard JavaScript -->
-    <script src="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/dist/jquery-wizard.min.js"></script>    
+    <script src="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/dist/jquery-wizard.min.js"></script>
     <!-- FormValidation -->
     <link rel="stylesheet" href="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/libs/formvalidation/formValidation.min.css">
     <!-- FormValidation plugin and the class supports validating Bootstrap form -->
     <script src="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/libs/formvalidation/formValidation.min.js"></script>
-    <script src="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/libs/formvalidation/bootstrap.min.js"></script>    
+    <script src="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/libs/formvalidation/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -84,10 +82,10 @@
                     <a class="logo" href="<?=site_url()?>">
                         <!-- Logo icon image, you can use font-icon also -->
                         <b><img src="<?=base_url()?><?=$this->session->userdata('atributsistem_logo') ? 'upload/sistem/'.$this->session->userdata('atributsistem_logo'):'/plugins/images/logohead.png' ?>" alt="home" style="width: 40px;height: 40px"/></b>
-                        <!-- Logo text image you can use text also 
+                        <!-- Logo text image you can use text also
                         <span class="hidden-xs"><img src="<?=base_url()?>/plugins/images/eliteadmin-text.png" alt="home" /></span>
                         -->
-                        <span class="hidden-xs"><?=$this->session->userdata('atributsistem_namasistem') ? $this->session->userdata('atributsistem_namasistem'):'Dashboard' ?></span>                        
+                        <span class="hidden-xs"><?=$this->session->userdata('atributsistem_namasistem') ? $this->session->userdata('atributsistem_namasistem'):'Dashboard' ?></span>
                     </a>
                 </div>
                 <!-- /Logo -->
@@ -164,24 +162,24 @@
                             <ul class="nav nav-second-level">
                               <?php foreach($menu->submenu AS $submenu):?>
                                 <li> <a href="<?= site_url($submenu->menu_link)?>"><?= ucwords(str_replace('_', ' ',$submenu->menu_nama))?></a> </li>
-                              <?php endforeach;?>                                 
+                              <?php endforeach;?>
                             </ul>
-                        </li>                                                   
+                        </li>
                       <?php else:?>
                         <!--
                         <li class="nav-item <?php if($global->menu==$menu->menu_nama){echo 'active';}?>">
                           <a href="<?= site_url($menu->menu_link)?>" >
                             <i class="<?= $menu->menu_ikon?>"></i>
                             <p><?= ucwords(str_replace('_', ' ',$menu->menu_nama))?></p>
-                             <?=$menu->menu_baru==1 ? '<span class="badge badge-count badge-primary">Baru</span>':($menu->menu_baru==2 ? '<span class="badge badge-count badge-danger">Pro</span>':($menu->menu_baru==3 ? '<span class="badge badge-count badge-warning">Dev</span>':'')) ?>                    
+                             <?=$menu->menu_baru==1 ? '<span class="badge badge-count badge-primary">Baru</span>':($menu->menu_baru==2 ? '<span class="badge badge-count badge-danger">Pro</span>':($menu->menu_baru==3 ? '<span class="badge badge-count badge-warning">Dev</span>':'')) ?>
                           </a>
                         </li>
-                        --> 
-                        <li> 
-                            <a href="<?= site_url($menu->menu_link)?>" class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu"><?= ucwords(str_replace('_', ' ',$menu->menu_nama))?></span></a> 
-                        </li>                                       
+                        -->
+                        <li>
+                            <a href="<?= site_url($menu->menu_link)?>" class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu"><?= ucwords(str_replace('_', ' ',$menu->menu_nama))?></span></a>
+                        </li>
                       <?php endif;?>
-                    <?php endforeach;?>                     
+                    <?php endforeach;?>
                 </ul>
             </div>
         </div>
@@ -199,13 +197,13 @@
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="<?=site_url()?>">Dashboard</a></li>
-                            <?php 
-                                if(isset($breadcrumb)){  
+                            <?php
+                                if(isset($breadcrumb)){
                                     foreach ($breadcrumb as $val) {
                                         echo $val;
                                     }
                                 }
-                            ?>    
+                            ?>
                             <li class="active" ><a href="JavaScript:loaddata()" ><?=ucwords($global->headline)?></a></li>
                         </ol>
                     </div>
@@ -220,10 +218,10 @@
                             position: 'top-right',
                             loaderBg:'#ff6849',
                             icon: 'success',
-                            hideAfter: 3500, 
+                            hideAfter: 3500,
                             stack: 6
                         });
-                                               
+
                     </script>
                 <?php elseif($this->session->flashdata('error')):?>
                     <script type="text/javascript">
@@ -233,9 +231,9 @@
                             position: 'top-right',
                             loaderBg:'#ff6849',
                             icon: 'error',
-                            hideAfter: 3500, 
+                            hideAfter: 3500,
                             stack: 6
-                        });                        
+                        });
                     </script>
                 <?php endif;?>
                 <?php
