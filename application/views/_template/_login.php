@@ -29,7 +29,6 @@
             <div class="white-box" style="margin-top: 20px">
                 <div class="text-center box-title m-b-20">
                     <img src="<?=base_url('/plugins/images/arraymotion.png')?>" style="height: 94px;width: 94px">
-                    <h3 class="text-muted">Registrasi Online</h3>
                 </div>
                 <?php if($this->session->flashdata('error')):?>
                 <div class="alert alert-danger alert-dismissable ">

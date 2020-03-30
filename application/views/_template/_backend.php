@@ -12,16 +12,21 @@
     <title><?=ucwords($global->headline)?></title>
     <link href="<?=base_url()?>/plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?=base_url()?>/plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <link href="<?=base_url()?>/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">    
+    <!-- Wizard CSS -->
+    <link href="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/css/wizard.css" rel="stylesheet">    
     <link href="<?=base_url()?>/plugins/bower_components/bootstrap-extension/css/bootstrap-extension.css" rel="stylesheet">
     <link href="<?=base_url()?>/plugins/bower_components/custom-select/custom-select.css" rel="stylesheet" type="text/css" />    
     <link href="<?=base_url()?>/plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="<?=base_url()?>/plugins/bower_components/datatables/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
-    <link href="<?=base_url()?>/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
     <link href="<?=base_url()?>/plugins/css/animate.css" rel="stylesheet">
     <link href="<?=base_url()?>/plugins/css/style.css" rel="stylesheet"> 
     <link href="<?=base_url()?>/plugins/css/colors/blue.css" id="theme" rel="stylesheet">
     <link href="<?=base_url()?>/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
-    <link href="<?=base_url()?>/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />    
+    <link href="<?=base_url()?>/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" /> 
+
+
+
     <!-- jQuery -->
     <script src="<?=base_url()?>/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
@@ -53,8 +58,14 @@
     <script src="<?=base_url()?>/plugins/bower_components/waypoints/lib/jquery.waypoints.js"></script>
     <script src="<?=base_url()?>/plugins/bower_components/counterup/jquery.counterup.min.js"></script>
     <!-- Chart JS -->
-
-    <script src="<?=base_url()?>/plugins/bower_components/Chart.js/Chart.min.js"></script>    
+    <script src="<?=base_url()?>/plugins/bower_components/Chart.js/Chart.min.js"></script> 
+    <!-- Form Wizard JavaScript -->
+    <script src="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/dist/jquery-wizard.min.js"></script>    
+    <!-- FormValidation -->
+    <link rel="stylesheet" href="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/libs/formvalidation/formValidation.min.css">
+    <!-- FormValidation plugin and the class supports validating Bootstrap form -->
+    <script src="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/libs/formvalidation/formValidation.min.js"></script>
+    <script src="<?=base_url()?>/plugins/bower_components/jquery-wizard-master/libs/formvalidation/bootstrap.min.js"></script>    
 </head>
 
 <body>
@@ -201,6 +212,32 @@
                     <!-- /.breadcrumb -->
                 </div>
                 <!-- KONTEN -->
+                <?php if($this->session->flashdata('success')):?>
+                    <script type="text/javascript">
+                        $.toast({
+                            heading: 'Perhatian',
+                            text: '<?= ucwords($this->session->flashdata('success'))?>',
+                            position: 'top-right',
+                            loaderBg:'#ff6849',
+                            icon: 'success',
+                            hideAfter: 3500, 
+                            stack: 6
+                        });
+                                               
+                    </script>
+                <?php elseif($this->session->flashdata('error')):?>
+                    <script type="text/javascript">
+                        $.toast({
+                            heading: 'Perhatian',
+                            text: '<?= ucwords($this->session->flashdata('error'))?>',
+                            position: 'top-right',
+                            loaderBg:'#ff6849',
+                            icon: 'error',
+                            hideAfter: 3500, 
+                            stack: 6
+                        });                        
+                    </script>
+                <?php endif;?>
                 <?php
                   if(file_exists(APPPATH.$global->view)){
                      include(APPPATH.$global->view);
