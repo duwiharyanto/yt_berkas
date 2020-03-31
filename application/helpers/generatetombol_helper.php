@@ -8,7 +8,7 @@
 		}
 		if($global->detail){
 			echo '
-			<a href="javascript:void(0)"  url="'.site_url($global->url.'/detail').'" id="'.$rowid.'" class="detail btn btn-primary btn-circle" data-toggle="tooltip" title="Detail">
+			<a href="javascript:void(0)"  url="'.site_url($global->url.'/detail').'" id="'.$rowid.'" class="detail btn btn-success btn-circle" data-toggle="tooltip" title="Detail">
 				<i class="fa fa-info"></i>
 			</a>';
 		}

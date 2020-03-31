@@ -22,11 +22,10 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="white-box">
-                    <h3 class="box-title">Total Kegiatan</h3>
-                    <ul class="list-inline two-part">
-                        <li><i class=" ti-calendar  text-purple"></i></li>
-                        <li class="text-right"><span class="counter"><?=count($jumkegiatan)?></span></li>
-                    </ul>
+                    <h3 class="box-title">Jenis Kelamin</h3>
+                    <div>
+                        <canvas id="chart3" height="150"></canvas>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -36,21 +35,12 @@
                         <li><i class=" ti-user  text-danger"></i></li>
                         <li class="text-right"><span class="counter"><?=count($warga)?></span></li>
                     </ul>
-                </div>
+                </div>                
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="white-box">
-                            <h3 class="box-title">Jenis Kelamin</h3>
-                            <div>
-                                <canvas id="chart3" height="150"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="white-box">
                     <h3 class="box-title">Warga Baru Ditambahkan</h3>
                     <ul class="feeds">

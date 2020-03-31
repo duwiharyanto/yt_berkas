@@ -38,7 +38,7 @@ class Warga extends CI_Controller {
 			$overwriteview=$data['overwriteview'];
 			$menu_submenu=$data['menu_submenu'];
 		}else{
-			$overwriteview="views/Registrasi/Registrasi/index.php";
+			$overwriteview="views/Warga/Warga/index.php";
 			$menu_submenu='data_warga';
 		}
 		$data=array(
@@ -67,11 +67,6 @@ class Warga extends CI_Controller {
 		$file=$this->Crud->read($query)->row();
 		unlink($this->path.$file->reg_foto);
 	}
-	public function uji()
-	{
-		$input='Helo world';
-		$this->duwi->ujicobalib($input);
-	}
 	public function index()
 	{
 		$global_set=array(
@@ -84,19 +79,19 @@ class Warga extends CI_Controller {
 		if($this->input->post('warga_nomorrumah')){
 			//PROSES SIMPAN
 			$data=array(
-				'warga_nomorrumah'=>$this->input->post('kegiatan_tempat'),
-				'warga_statustempattinggal'=>$this->input->post('kegiatan_tempat'),
-				'warga_statusktp'=>$this->input->post('kegiatan_tempat'),
-				'warga_domisili'=>$this->input->post('kegiatan_tempat'),
-				'warga_jaminankesehatan'=>$this->input->post('kegiatan_tempat'),
-				'warga_nomorjaminankesehatan'=>$this->input->post('kegiatan_tempat'),
-				'warga_sktm'=>$this->input->post('kegiatan_tempat'),
-				'warga_namakeluarga'=>$this->input->post('kegiatan_tempat'),
-				'warga_alamatnamakeluarga'=>$this->input->post('kegiatan_tempat'),
-				'warga_nohpkeluarga'=>$this->input->post('kegiatan_tempat'),
-				'warga_nomorkk'=>$this->input->post('kegiatan_tempat'),
-				'warga_nomorktp'=>$this->input->post('kegiatan_tempat'),
-				'warga_nama'=>$this->input->post('kegiatan_tempat'),
+				'warga_nomorrumah'=>$this->input->post('warga_nomorrumah'),
+				'warga_statustempattinggal'=>$this->input->post('warga_statustempattinggal'),
+				'warga_statusktp'=>$this->input->post('warga_statusktp'),
+				'warga_domisili'=>$this->input->post('warga_domisili'),
+				'warga_jaminankesehatan'=>$this->input->post('warga_jaminankesehatan'),
+				'warga_nomorjaminankesehatan'=>$this->input->post('warga_nomorjaminankesehatan'),
+				'warga_sktm'=>$this->input->post('warga_sktm'),
+				'warga_namakeluarga'=>$this->input->post('warga_namakeluarga'),
+				'warga_alamatnamakeluarga'=>$this->input->post('warga_alamatnamakeluarga'),
+				'warga_nohpkeluarga'=>$this->input->post('warga_nohpkeluarga'),
+				'warga_nomorkk'=>$this->input->post('warga_nomorkk'),
+				'warga_nomorktp'=>$this->input->post('warga_nomorktp'),
+				'warga_nama'=>$this->input->post('warga_nama'),
 				'warga_hubungankeluarga'=>$this->input->post('warga_hubungankeluarga'),
 				'warga_alamatktp'=>$this->input->post('warga_alamatktp'),
 				'warga_jeniskelamin'=>$this->input->post('warga_jeniskelamin'),
@@ -182,13 +177,13 @@ class Warga extends CI_Controller {
 				'warga_domisili'=>$this->input->post('warga_domisili'),
 				'warga_jaminankesehatan'=>$this->input->post('warga_jaminankesehatan'),
 				'warga_nomorjaminankesehatan'=>$this->input->post('warga_nomorjaminankesehatan'),
-				'warga_sktm'=>$this->input->post('kegiatan_tempat'),
-				'warga_namakeluarga'=>$this->input->post('kegiatan_tempat'),
-				'warga_alamatnamakeluarga'=>$this->input->post('kegiatan_tempat'),
-				'warga_nohpkeluarga'=>$this->input->post('kegiatan_tempat'),
-				'warga_nomorkk'=>$this->input->post('kegiatan_tempat'),
-				'warga_nomorktp'=>$this->input->post('kegiatan_tempat'),
-				'warga_nama'=>$this->input->post('kegiatan_tempat'),
+				'warga_sktm'=>$this->input->post('warga_sktm'),
+				'warga_namakeluarga'=>$this->input->post('warga_namakeluarga'),
+				'warga_alamatnamakeluarga'=>$this->input->post('warga_alamatnamakeluarga'),
+				'warga_nohpkeluarga'=>$this->input->post('warga_nohpkeluarga'),
+				'warga_nomorkk'=>$this->input->post('warga_nomorkk'),
+				'warga_nomorktp'=>$this->input->post('warga_nomorktp'),
+				'warga_nama'=>$this->input->post('warga_nama'),
 				'warga_hubungankeluarga'=>$this->input->post('warga_hubungankeluarga'),
 				'warga_alamatktp'=>$this->input->post('warga_alamatktp'),
 				'warga_jeniskelamin'=>$this->input->post('warga_jeniskelamin'),
