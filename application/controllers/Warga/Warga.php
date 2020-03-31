@@ -148,6 +148,7 @@ class Warga extends CI_Controller {
 			'headline'=>'Data',
 			'url'=>$this->default_url,
 		);
+		$nama;$norumah;
 		//LOAD FUNCTION GLOBAL SET
 		$global=$this->global_set($global_set);
 		//PROSES TAMPIL DATA
@@ -155,6 +156,12 @@ class Warga extends CI_Controller {
 			'tabel'=>$this->master_tabel,
 			'order'=>array('kolom'=>$this->id,'orderby'=>'DESC'),
 		);
+		if($this->input->post('nama')) {
+			$nama=$this->input->post('nama');
+		}
+		if($this->input->post('norumah')) {
+			$norumah=$this->input->post('norumah');
+		}
 		$data=array(
 			'global'=>$global,
 			'data'=>$this->Crud->read($query)->result(),
