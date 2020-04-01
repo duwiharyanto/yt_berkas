@@ -24,34 +24,34 @@
       <tr >
         <th >No</th>
         <th width="10%">Nomor Rumah</th>
-        <th width="20%">Nama</th>
+        <th >Nama</th>
         <th >No.HP</th>
+        <th >Pendidikan</th>
         <th >Kelamin</th>
-        <th width="20%">Status Tinggal</th>
         <th >Domisili</th>
       </tr>
     </thead>
     <tbody>
       <?php $i=1;?>
       <?php foreach($data AS $row):?>
-        <tr>
-          <td><?=$i?></td>
-          <td><?='Nomor :'.$row->warga_nomorrumah?></td>
-          <td><?=ucwords($row->warga_nama).'<br><i>Lahir : '.date('d-m-Y',strtotime($row->warga_tanggallahir)).'</i>'?></td>
-          <td><?=$row->warga_nomorhp?></td>
-          <td><?=ucwords($row->warga_jeniskelamin)?></td>
-          <td><?=ucwords($row->warga_statustempattinggal)?></td>
-          <td><?=str_replace('_',' ',ucwords($row->warga_domisili))?></td>
-        </tr>
-    <?php $i++;?>  
-    <?php endforeach;?> 
+      <tr>
+        <td><?=$i?></td>
+        <td><?=$row->norumah_nomor?></td>
+        <td><?=ucwords($row->warga_nama).'<br><i>Lahir : '.date('d-m-Y',strtotime($row->warga_tanggallahir)).'</i>'?></td>
+        <td><?=$row->warga_nohp?></td>
+        <td><?=$row->pendidikan_nama?></td>
+        <td><?=$row->warga_jeniskelamin==1 ? 'Laki-Laki':'Perempuan'?></td>
+        <td><?=ucwords($row->warga_domisili)?></td>
+      </tr>
+    <?php $i++;?>
+    <?php endforeach;?>
     </tbody>
-</table> 
+</table>
 <table width="100%" style="margin-top: 5px">
   <tr>
     <td  align="right"><i>Dicetak oleh sistem</i></td>
   </tr>
-</table> 
+</table>
 <!--
 <table width="100%" style="margin-top: 100px">
   <tr>

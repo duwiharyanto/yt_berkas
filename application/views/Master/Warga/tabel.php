@@ -14,6 +14,9 @@
                         <?php if($global->import):?>
                             <li role="presentation"><a href="javascript:void(0)" data-toggle="modal" data-target="#importdata" role="menuitem"><i class="fa fa-upload" aria-hidden="true"></i> Import</a></li>
                         <?php endif;?>
+                        <?php if($global->cari):?>
+                            <li role="presentation"><a href="javascript:void(0)" onclick="location.reload()" role="menuitem"><i class="fa fa-search" aria-hidden="true"></i> Cari</a></li>
+                        <?php endif;?>
                         <li class="divider" role="presentation"></li>
                         <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="fa fa-gears" aria-hidden="true"></i> Settings</a></li>
                     </ul>
@@ -30,6 +33,7 @@
                       <th width="10%">Nomor Rumah</th>
                       <th >Nama</th>
                       <th >No.HP</th>
+                      <th >Pendidikan</th>
                       <th >Kelamin</th>
                       <th >Domisili</th>
                       <th class="text-center">Aksi</th>
@@ -40,10 +44,11 @@
                     <?php foreach($data AS $row):?>
                     <tr>
                       <td><?=$i?></td>
-                      <td><?='Nomor :'.$row->warga_nomorrumah?></td>
+                      <td><?=$row->norumah_nomor?></td>
                       <td><?=ucwords($row->warga_nama).'<br><i>Lahir : '.date('d-m-Y',strtotime($row->warga_tanggallahir)).'</i>'?></td>
-                      <td><?=$row->warga_nomorhp?></td>
-                      <td><?=ucwords($row->warga_jeniskelamin)?></td>
+                      <td><?=$row->warga_nohp?></td>
+                      <td><?=$row->pendidikan_nama?></td>
+                      <td><?=$row->warga_jeniskelamin==1 ? 'Laki-Laki':'Perempuan'?></td>
                       <td><?=ucwords($row->warga_domisili)?></td>
                       <td class="text-center">
                         <?php tombolaksi($global,$row->warga_id,$this->uri->segment(3))//include 'button.php';?>

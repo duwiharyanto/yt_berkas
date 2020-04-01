@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
-	    <div class="panel panel-info">
+	    <div class="panel panel-success">
 	        <div class="panel-heading"> <?=ucwords($global->headline)?>
 	            <div class="pull-right"><a href="#" data-perform="panel-collapse"><i class="ti-minus"></i></a> <a href="#" data-perform="panel-dismiss"><i class="ti-close"></i></a> </div>
 	        </div>
@@ -12,7 +12,13 @@
 								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 								<div class="form-group">
 									<label>Nomor Rumah</label>
-									<input required type="text" name="warga_norumah" class="form-control" title="Harus di isi">
+									<select name="warga_norumah" class="form-control select">
+										<?php foreach ($norumah as $val):?>
+											<option value="<?=$val->norumah_id?>">
+												<?=$val->norumah_nomor?>
+											</option>
+										<?php endforeach;?>
+									</select>
 								</div>
 								<div class="form-group">
 									<label>Nama</label>
@@ -20,7 +26,16 @@
 								</div>
 								<div class="form-group">
 									<label>Jenis Kelamin</label>
-									<input required type="text" name="warga_nama" class="form-control" title="Harus di isi">
+									<div class="">
+				      					<label style="padding-right: 20px">
+				      						<input required name="warga_jeniskelamin" value="1" type="radio" >
+				      						Laki-Laki
+				      					</label>
+				      					<label style="padding-right: 20px">
+				      						<input required name="warga_jeniskelamin" value="0" type="radio">
+				      						Perempuan
+				      					</label>
+				      				</div>
 								</div>
 								<div class="form-group">
 									<label>Tanggal Lahir</label>
@@ -29,14 +44,40 @@
 								<div class="form-group">
 									<label>Pendidikan</label>
 									<select class="form-control select" name="warga_idpendidikan">
+										<?php foreach ($pendidikan as $val):?>
+											<option value="<?=$val->pendidikan_id?>">
+												<?=$val->pendidikan_nama?>
+											</option>
+										<?php endforeach;?>
+									</select>
+								</div>
+								<div class="form-group">
+									<label>Agama</label>
+									<select name="warga_agama" class="form-control select">
 										<option>
-											SD
+											Islam
+										</option>
+										<option>
+											Kristen
+										</option>
+										<option>
+											Khatolik
+										</option>
+										<option>
+											Hindu
+										</option>
+										<option>
+											Budha
 										</option>
 									</select>
 								</div>
 								<div class="form-group">
+									<label>Golongan Darah</label>
+									<input required type="text" name="warga_golongandarah" class="form-control" title="Harus di isi">
+								</div>
+								<div class="form-group">
 									<label>Nomor HP</label>
-									<input required type="text" name="warga_nomorhp" class="form-control" title="Harus di isi">
+									<input required type="text" name="warga_nohp" class="form-control" title="Harus di isi">
 								</div>
 								<div class="form-group">
 									<label>Alamat/Domisili</label>

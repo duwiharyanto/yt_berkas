@@ -10,7 +10,7 @@ class Model extends CI_Model
 		if(isset($data['select'])){
 			$this->db->select($data['select']);
 			//SELECT nama kolom,.dst
-		}		
+		}
 		if(isset($data['where'])){
 			foreach($data['where'] AS $where){
 				$this->db->where($where);
@@ -22,22 +22,22 @@ class Model extends CI_Model
 				$this->db->like($like);
 			}
 			//WHERE nama=... AND WHERE ... N
-		}		
+		}
 		if(isset($data['or_where'])){
 			// $this->db->where($data['or_where']);
 			foreach($data['or_where'] AS $orwhere){
 				$this->db->or_where($orwhere);
-			}			
+			}
 		}
 		if(isset($data['limit'])){
 			$this->db->limit($data['limit']);
-		}		
+		}
 		if(isset($data['order'])){
 			$this->db->order_by($data['order']['kolom'],$data['order']['orderby']);
 		}
 		if(isset($data['group_by'])){
-			$this->db->group_by($data['group_by']);	
-		}		
+			$this->db->group_by($data['group_by']);
+		}
 		return $this->db->get($data['tabel']);
 	}
 	public function insert($data){
@@ -55,15 +55,15 @@ class Model extends CI_Model
 			$error=$this->db->error();
 			return $error['message'];
 		}
-	}			
-  	public function insert_multiple($data){  
+	}
+  	public function insert_multiple($data){
 		if( $this->db->insert_batch($data['tabel'], $data['data'])){
 			return true;
 		}else{
 			$error=$this->db->error();
 			return $error['message'];
-		}  	  
-  	}	
+		}
+  	}
 	public function delete($data){
 		$this->db->where($data['where']); //ID PRIMARY KEY
 		if($this->db->delete($data['tabel'])){
@@ -100,7 +100,12 @@ class Model extends CI_Model
 		}
 		if(isset($data['limit'])){
 			$this->db->limit($data['limit']);
-		}					
+		}
+		if(isset($data['like'])){
+			foreach($data['like'] AS $like){
+				$this->db->like($like);
+			}
+		}
 		return $this->db->get();
 	}
 	public function count($tabel){
@@ -108,6 +113,6 @@ class Model extends CI_Model
 	}
 	public function hardcode($data){
 		return $this->db->query($data);
-	}	
+	}
 }
 ?>

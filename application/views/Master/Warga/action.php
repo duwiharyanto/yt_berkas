@@ -60,7 +60,7 @@
         url:url,
         data:{id:id},
         success:function(data){
-          $("#view").html(data);
+          $("#konten").html(data);
         }
       })
       return false;
@@ -163,7 +163,7 @@
   }
   function loaddata(){
     var url='<?= base_url($global->url."tabel")?>';
-    $("#view").load(url);
+    $("#konten").load(url);
   }
   function hapus(){
     $('.hapus').click(function(){
