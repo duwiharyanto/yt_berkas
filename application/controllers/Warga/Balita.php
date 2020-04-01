@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as writer;
 
-class Warga extends CI_Controller {
+class Balita extends CI_Controller {
 // class Registrasi extends Core {
 	public function __construct(){
 		parent::__construct();
@@ -24,10 +24,10 @@ class Warga extends CI_Controller {
 		$this->duwi->cekadmin();
 	}
 	//VARIABEL
-	private $master_tabel="warga"; //Mendefinisikan Nama Tabel
-	private $id="warga_id";	//Menedefinisaikan Nama Id Tabel
-	private $default_url="Warga/Warga/"; //Mendefinisikan url controller
-	private $default_view="Warga/Warga/"; //Mendefinisiakn defaul view
+	private $master_tabel="balita"; //Mendefinisikan Nama Tabel
+	private $id="balita_id";	//Menedefinisaikan Nama Id Tabel
+	private $default_url="Warga/Balita/"; //Mendefinisikan url controller
+	private $default_view="Warga/Balita/"; //Mendefinisiakn defaul view
 	private $view="_template/_backend"; //Mendefinisikan Tamplate Root
 	private $path='./upload/registrasi/';
 	private $pathformatimport='./template/';
@@ -39,7 +39,7 @@ class Warga extends CI_Controller {
 			$menu_submenu=$data['menu_submenu'];
 		}else{
 			$overwriteview="views/Warga/Warga/index.php";
-			$menu_submenu='data_warga';
+			$menu_submenu='balita';
 		}
 		$data=array(
 			'menu'=>'warga',//Seting menu yang aktif
@@ -70,7 +70,7 @@ class Warga extends CI_Controller {
 	public function index()
 	{
 		$global_set=array(
-			'headline'=>'data warga',
+			'headline'=>'balita',
 			'url'=>$this->default_url,
 		);
 		$global=$this->global_set($global_set);

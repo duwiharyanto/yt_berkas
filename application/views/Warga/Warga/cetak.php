@@ -41,7 +41,7 @@
           <td><?=$row->warga_nomorhp?></td>
           <td><?=ucwords($row->warga_jeniskelamin)?></td>
           <td><?=ucwords($row->warga_statustempattinggal)?></td>
-          <td><?=ucwords($row->warga_domisili)?></td>
+          <td><?=str_replace('_',' ',ucwords($row->warga_domisili))?></td>
         </tr>
     <?php $i++;?>  
     <?php endforeach;?> 

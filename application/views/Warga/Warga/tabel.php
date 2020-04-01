@@ -42,7 +42,7 @@
                       <td><?=$row->warga_nomorhp?></td>
                       <td><?=ucwords($row->warga_jeniskelamin)?></td>
                       <td><?=ucwords($row->warga_statustempattinggal)?></td>
-                      <td><?=ucwords($row->warga_domisili)?></td>
+                      <td><?=str_replace('_',' ',ucwords($row->warga_domisili))?></td>
                       <td class="text-center">
                         <?php tombolaksi($global,$row->warga_id,$this->uri->segment(3))//include 'button.php';?>
                       </td>

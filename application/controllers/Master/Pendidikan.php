@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as writer;
 
-class Warga extends CI_Controller {
+class Pendidikan extends CI_Controller {
 // class Registrasi extends Core {
 	public function __construct(){
 		parent::__construct();
@@ -24,10 +24,10 @@ class Warga extends CI_Controller {
 		$this->duwi->cekadmin();
 	}
 	//VARIABEL
-	private $master_tabel="warga"; //Mendefinisikan Nama Tabel
-	private $id="warga_id";	//Menedefinisaikan Nama Id Tabel
-	private $default_url="Warga/Warga/"; //Mendefinisikan url controller
-	private $default_view="Warga/Warga/"; //Mendefinisiakn defaul view
+	private $master_tabel="pendidikan"; //Mendefinisikan Nama Tabel
+	private $id="pendidikan_id";	//Menedefinisaikan Nama Id Tabel
+	private $default_url="Master/Pendidikan/"; //Mendefinisikan url controller
+	private $default_view="Master/Pendidikan/"; //Mendefinisiakn defaul view
 	private $view="_template/_backend"; //Mendefinisikan Tamplate Root
 	private $path='./upload/registrasi/';
 	private $pathformatimport='./template/';
@@ -38,11 +38,11 @@ class Warga extends CI_Controller {
 			$overwriteview=$data['overwriteview'];
 			$menu_submenu=$data['menu_submenu'];
 		}else{
-			$overwriteview="views/Warga/Warga/index.php";
-			$menu_submenu='data_warga';
+			$overwriteview="views/Master/Pendidikan/index.php";
+			$menu_submenu='pendidikan';
 		}
 		$data=array(
-			'menu'=>'warga',//Seting menu yang aktif
+			'menu'=>'master',//Seting menu yang aktif
 			'menu_submenu'=>$menu_submenu,
 			'headline'=>$data['headline'], //Deskripsi Menu
 			'url'=>$data['url'], //Deskripsi URL yang dilewatkan dari function
@@ -70,7 +70,7 @@ class Warga extends CI_Controller {
 	public function index()
 	{
 		$global_set=array(
-			'headline'=>'data warga',
+			'headline'=>'pendidikan',
 			'url'=>$this->default_url,
 		);
 		$global=$this->global_set($global_set);
@@ -433,3 +433,4 @@ class Warga extends CI_Controller {
 		$this->load->view($this->default_view.'detail',$data);
 	}
 }
+
