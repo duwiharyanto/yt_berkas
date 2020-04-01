@@ -22,21 +22,27 @@
 <table width="100%" border="1" cellpadding="5" cellspacing="0">
     <thead>
       <tr >
-        <th width="5%">No</th>
-        <th >Tanggal</th>
-        <th >Kegiatan</th>
-        <th >Tempat</th>
+        <th >No</th>
+        <th width="10%">Nomor Rumah</th>
+        <th width="20%">Nama</th>
+        <th >No.HP</th>
+        <th >Kelamin</th>
+        <th width="20%">Status Tinggal</th>
+        <th >Domisili</th>
       </tr>
     </thead>
     <tbody>
       <?php $i=1;?>
       <?php foreach($data AS $row):?>
-      <tr>
-        <td><?=$i?></td>
-        <td><?=date('d-m-Y',strtotime($row->kegiatan_tanggal))?></td>
-        <td><?=ucwords($row->kegiatan_nama)?></td>
-        <td><?=ucwords($row->kegiatan_tempat)?></td>
-      </tr>
+        <tr>
+          <td><?=$i?></td>
+          <td><?='Nomor :'.$row->warga_nomorrumah?></td>
+          <td><?=ucwords($row->warga_nama).'<br><i>Lahir : '.date('d-m-Y',strtotime($row->warga_tanggallahir)).'</i>'?></td>
+          <td><?=$row->warga_nomorhp?></td>
+          <td><?=ucwords($row->warga_jeniskelamin)?></td>
+          <td><?=ucwords($row->warga_statustempattinggal)?></td>
+          <td><?=ucwords($row->warga_domisili)?></td>
+        </tr>
     <?php $i++;?>  
     <?php endforeach;?> 
     </tbody>
@@ -46,6 +52,7 @@
     <td  align="right"><i>Dicetak oleh sistem</i></td>
   </tr>
 </table> 
+<!--
 <table width="100%" style="margin-top: 100px">
   <tr>
     <td width="50%"></td>
@@ -55,5 +62,6 @@
     </td>
   </tr>
 </table>
+-->
 </body>
 </html>

@@ -17,6 +17,12 @@ class Model extends CI_Model
 			}
 			//WHERE nama=... AND WHERE ... N
 		}
+		if(isset($data['like'])){
+			foreach($data['like'] AS $like){
+				$this->db->like($like);
+			}
+			//WHERE nama=... AND WHERE ... N
+		}		
 		if(isset($data['or_where'])){
 			// $this->db->where($data['or_where']);
 			foreach($data['or_where'] AS $orwhere){

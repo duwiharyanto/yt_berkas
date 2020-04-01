@@ -148,7 +148,8 @@ class Warga extends CI_Controller {
 			'headline'=>'Data',
 			'url'=>$this->default_url,
 		);
-		$nama;$norumah;
+		$nama='';
+		$norumah='';
 		//LOAD FUNCTION GLOBAL SET
 		$global=$this->global_set($global_set);
 		//PROSES TAMPIL DATA
@@ -159,13 +160,20 @@ class Warga extends CI_Controller {
 		if($this->input->post('nama')) {
 			$nama=$this->input->post('nama');
 		}
-		if($this->input->post('norumah')) {
-			$norumah=$this->input->post('norumah');
+		if($this->input->post('nomorumah')) {
+			$norumah=$this->input->post('nomorumah');
+		}		
+		if($nama OR $norumah){
+		 	$query['like']=[['warga_nama'=>$nama]];
+			if($norumah){
+				$query['like']=[['warga_nama'=>$nama],['warga_nomorrumah'=>$norumah]];
+			}	
 		}
 		$data=array(
 			'global'=>$global,
 			'data'=>$this->Crud->read($query)->result(),
 		);
+
 		$this->load->view($this->default_view.'tabel',$data);
 	}
 	public function edit(){
@@ -358,16 +366,24 @@ class Warga extends CI_Controller {
 	public function downloadtemplate($file){
 		$this->downloadfile($this->pathformatimport,$file);
 	}
-	public function cetak(){
+	public function cetak($nama=null,$norumah=null){
 		$global_set=array(
-			'headline'=>'Daftar Kegiatan',
+			'headline'=>'Daftar Warga',
 			'url'=>$this->default_url,
 		);
 		$global=$this->global_set($global_set);
 		$query=array(
 			'tabel'=>$this->master_tabel,
 			'order'=>array('kolom'=>$this->id,'orderby'=>'DESC'),
-		);
+		);	
+		if($norumah!='0'){
+		 	// print_r($norumah.$nama);
+		 	// exit();
+			$query['like']=[['warga_nomorrumah'=>$norumah]];		 	
+		}		
+		if($nama!='0'){
+		 	$query['like']=[['warga_nama'=>$nama]];	
+		}		
 		$data=array(
 			'global'=>$global,
 			'data'=>$this->Crud->read($query)->result(),
