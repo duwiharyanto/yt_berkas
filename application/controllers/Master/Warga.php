@@ -49,12 +49,12 @@ class Warga extends CI_Controller {
 			'ikon'=>"fa fa-tasks",
 			'view'=>$overwriteview,
 			'detail'=>true,
-			'cetak'=>false,
+			'print'=>false,
 			'edit'=>true,
 			'delete'=>true,
 			'download'=>false,
-			'add'=>true,
-			'import'=>true,
+			'tambah'=>true,
+			'import'=>false,
 			'qrcode'=>false,
 		);
 		return (object)$data; //MEMBUAT ARRAY DALAM BENTUK OBYEK
@@ -162,13 +162,13 @@ class Warga extends CI_Controller {
 		}
 		if($this->input->post('nomorumah')) {
 			$norumah=$this->input->post('nomorumah');
-		}		
+		}
 		if($nama OR $norumah){
 		 	$query['like']=[['warga_nama'=>$nama]];
 			if($norumah){
 				// $query['like']=[['warga_nama'=>$nama],['warga_nomorrumah'=>$norumah]];
 				$query['where']=[['warga_nomorrumah'=>$norumah]];
-			}	
+			}
 		}
 		$data=array(
 			'global'=>$global,
@@ -376,17 +376,17 @@ class Warga extends CI_Controller {
 		$query=array(
 			'tabel'=>$this->master_tabel,
 			'order'=>array('kolom'=>$this->id,'orderby'=>'DESC'),
-		);	
+		);
 		if((isset($nama)) AND (isset($norumah))){
 		if($norumah!='0'){
 		 	// print_r($norumah.$nama);
 		 	// exit();
-			$query['where']=[['warga_nomorrumah'=>$norumah]];		 	
-		}		
+			$query['where']=[['warga_nomorrumah'=>$norumah]];
+		}
 		if($nama!='0'){
-		 	$query['like']=[['warga_nama'=>$nama]];	
-		}			
-		}		
+		 	$query['like']=[['warga_nama'=>$nama]];
+		}
+		}
 		$data=array(
 			'global'=>$global,
 			'data'=>$this->Crud->read($query)->result(),
@@ -433,4 +433,3 @@ class Warga extends CI_Controller {
 		$this->load->view($this->default_view.'detail',$data);
 	}
 }
-
