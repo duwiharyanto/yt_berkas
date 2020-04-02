@@ -48,13 +48,13 @@ class Pendatang extends CI_Controller {
 			'url'=>$data['url'], //Deskripsi URL yang dilewatkan dari function
 			'ikon'=>"fa fa-tasks",
 			'view'=>$overwriteview,
-			'detail'=>true,
+			'detail'=>false,
 			'cetak'=>false,
 			'edit'=>true,
 			'delete'=>true,
 			'download'=>false,
 			'add'=>true,
-			'import'=>true,
+			'import'=>false,
 			'qrcode'=>false,
 		);
 		return (object)$data; //MEMBUAT ARRAY DALAM BENTUK OBYEK
@@ -76,39 +76,12 @@ class Pendatang extends CI_Controller {
 		$global=$this->global_set($global_set);
 
 		//CEK SUBMIT DATA
-		if($this->input->post('warga_nomorrumah')){
+		if($this->input->post('pendatang_idwarga')){
 			//PROSES SIMPAN
 			$data=array(
-				'warga_nomorrumah'=>$this->input->post('warga_nomorrumah'),
-				'warga_statustempattinggal'=>$this->input->post('warga_statustempattinggal'),
-				'warga_statusktp'=>$this->input->post('warga_statusktp'),
-				'warga_domisili'=>$this->input->post('warga_domisili'),
-				'warga_jaminankesehatan'=>$this->input->post('warga_jaminankesehatan'),
-				'warga_nomorjaminankesehatan'=>$this->input->post('warga_nomorjaminankesehatan'),
-				'warga_sktm'=>$this->input->post('warga_sktm'),
-				'warga_namakeluarga'=>$this->input->post('warga_namakeluarga'),
-				'warga_alamatnamakeluarga'=>$this->input->post('warga_alamatnamakeluarga'),
-				'warga_nohpkeluarga'=>$this->input->post('warga_nohpkeluarga'),
-				'warga_nomorkk'=>$this->input->post('warga_nomorkk'),
-				'warga_nomorktp'=>$this->input->post('warga_nomorktp'),
-				'warga_nama'=>$this->input->post('warga_nama'),
-				'warga_hubungankeluarga'=>$this->input->post('warga_hubungankeluarga'),
-				'warga_alamatktp'=>$this->input->post('warga_alamatktp'),
-				'warga_jeniskelamin'=>$this->input->post('warga_jeniskelamin'),
-				'warga_tempatlahir'=>$this->input->post('warga_tempatlahir'),
-				'warga_tanggallahir'=>date('Y-m-d',strtotime($this->input->post('warga_tanggallahir'))),
-				'warga_nomorhp'=>$this->input->post('warga_nomorhp'),
-				'warga_statusnomor'=>$this->input->post('warga_statusnomor'),
-				'warga_email'=>$this->input->post('warga_email'),
-				'warga_agama'=>$this->input->post('warga_agama'),
-				'warga_golongandarah'=>$this->input->post('warga_golongandarah'),
-				'warga_hobi'=>$this->input->post('warga_hobi'),
-				'warga_statusperkawainan'=>$this->input->post('warga_statusperkawainan'),
-				'warga_pendidikanterakhir'=>$this->input->post('warga_pendidikanterakhir'),
-				'warga_pekerjaan'=>$this->input->post('warga_pekerjaan'),
-				'warga_alamatbekerja'=>$this->input->post('warga_alamatbekerja'),
-				'warga_npwp'=>$this->input->post('warga_npwp'),
-				'warga_nonpwp'=>$this->input->post('warga_nonpwp'),
+				'pendatang_idwarga'=>$this->input->post('pendatang_idwarga'),
+				'pendatang_alamatbaru'=>$this->input->post('pendatang_alamatbaru'),
+				'pendatang_alamatlama'=>$this->input->post('pendatang_alamatlama'),
 			);
 			########################################################
 			// $file='reg_foto';
@@ -154,8 +127,13 @@ class Pendatang extends CI_Controller {
 		$global=$this->global_set($global_set);
 		//PROSES TAMPIL DATA
 		$query=array(
-			'tabel'=>$this->master_tabel,
-			'order'=>array('kolom'=>$this->id,'orderby'=>'DESC'),
+			'select'=>'a.*,b.pendidikan_nama,c.norumah_nomor,c.norumah_keterangan,d.pendatang_alamatbaru,d.pendatang_alamatlama,d.pendatang_id',
+			'tabel'=>'wargakampung a',
+			'join'=>[['tabel'=>'pendidikan b','ON'=>'b.pendidikan_id=a.warga_idpendidikan','jenis'=>"iNNER"],
+			['tabel'=>'norumah c','ON'=>'c.norumah_id=a.warga_norumah','jenis'=>'INNER'],
+			['tabel'=>'pendatang d','ON'=>'d.pendatang_idwarga=a.warga_id','jenis'=>'INNER']
+			],
+			'order'=>array('kolom'=>'a.warga_nama','orderby'=>'ASC'),
 		);
 		if($this->input->post('nama')) {
 			$nama=$this->input->post('nama');
@@ -172,7 +150,7 @@ class Pendatang extends CI_Controller {
 		}
 		$data=array(
 			'global'=>$global,
-			'data'=>$this->Crud->read($query)->result(),
+			'data'=>$this->Crud->join($query)->result(),
 		);
 
 		$this->load->view($this->default_view.'tabel',$data);
@@ -184,39 +162,12 @@ class Pendatang extends CI_Controller {
 		);
 		$global=$this->global_set($global_set);
 		$id=$this->input->post('id');
-		if($this->input->post('warga_nomorrumah')){
+		if($this->input->post('pendatang_idwarga')){
 			//PROSES SIMPAN
 			$data=array(
-				'warga_nomorrumah'=>$this->input->post('warga_nomorrumah'),
-				'warga_statustempattinggal'=>$this->input->post('warga_statustempattinggal'),
-				'warga_statusktp'=>$this->input->post('warga_statusktp'),
-				'warga_domisili'=>$this->input->post('warga_domisili'),
-				'warga_jaminankesehatan'=>$this->input->post('warga_jaminankesehatan'),
-				'warga_nomorjaminankesehatan'=>$this->input->post('warga_nomorjaminankesehatan'),
-				'warga_sktm'=>$this->input->post('warga_sktm'),
-				'warga_namakeluarga'=>$this->input->post('warga_namakeluarga'),
-				'warga_alamatnamakeluarga'=>$this->input->post('warga_alamatnamakeluarga'),
-				'warga_nohpkeluarga'=>$this->input->post('warga_nohpkeluarga'),
-				'warga_nomorkk'=>$this->input->post('warga_nomorkk'),
-				'warga_nomorktp'=>$this->input->post('warga_nomorktp'),
-				'warga_nama'=>$this->input->post('warga_nama'),
-				'warga_hubungankeluarga'=>$this->input->post('warga_hubungankeluarga'),
-				'warga_alamatktp'=>$this->input->post('warga_alamatktp'),
-				'warga_jeniskelamin'=>$this->input->post('warga_jeniskelamin'),
-				'warga_tempatlahir'=>$this->input->post('warga_tempatlahir'),
-				'warga_tanggallahir'=>date('Y-m-d',strtotime($this->input->post('warga_tanggallahir'))),
-				'warga_nomorhp'=>$this->input->post('warga_nomorhp'),
-				'warga_statusnomor'=>$this->input->post('warga_statusnomor'),
-				'warga_email'=>$this->input->post('warga_email'),
-				'warga_agama'=>$this->input->post('warga_agama'),
-				'warga_golongandarah'=>$this->input->post('warga_golongandarah'),
-				'warga_hobi'=>$this->input->post('warga_hobi'),
-				'warga_statusperkawainan'=>$this->input->post('warga_statusperkawainan'),
-				'warga_pendidikanterakhir'=>$this->input->post('warga_pendidikanterakhir'),
-				'warga_pekerjaan'=>$this->input->post('warga_pekerjaan'),
-				'warga_alamatbekerja'=>$this->input->post('warga_alamatbekerja'),
-				'warga_npwp'=>$this->input->post('warga_npwp'),
-				'warga_nonpwp'=>$this->input->post('warga_nonpwp'),
+				'pendatang_idwarga'=>$this->input->post('pendatang_idwarga'),
+				'pendatang_alamatbaru'=>$this->input->post('pendatang_alamatbaru'),
+				'pendatang_alamatlama'=>$this->input->post('pendatang_alamatlama'),
 			);
 			####################################################
 			// $file='user_foto';
@@ -252,82 +203,17 @@ class Pendatang extends CI_Controller {
 				'tabel'=>$this->master_tabel,
 				'where'=>array(array($this->id=>$id))
 			);
+			$warga=array(
+				'tabel'=>'wargakampung',
+			);			
 			$data=array(
+				'warga'=>$this->Crud->read($warga)->result(),
 				'data'=>$this->Crud->read($query)->row(),
 				'global'=>$global,
 			);
 			//$this->viewdata($data);
 			$this->load->view($this->default_view.'edit',$data);
 		}
-	}
-	public function importdatas(){
-		// echo "import";
-		// exit();
-		$file='fileimport';
-		$insert=false; //DEFAULT
-		$file_mimes = array('application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		if(isset($_FILES[$file]['name']) && in_array($_FILES[$file]['type'], $file_mimes)) {
-		    $arr_file = explode('.', $_FILES[$file]['name']);
-		    $extension = end($arr_file);
-		    if('csv' == $extension) {
-		        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-		    } else {
-		        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-
-		    }
-		    $spreadsheet = $reader->load($_FILES[$file]['tmp_name']);
-		    $sheetData = $spreadsheet->getActiveSheet()->toArray();
-		    $data=array();
-			for($i = 1;$i < count($sheetData);$i++)
-			{
-		    	array_push($data, array(
-					'warga_nomorrumah'=>$sheetData[$i]['1'],
-					'warga_statustempattinggal'=>$sheetData[$i]['2'],
-					'warga_statusktp'=>$sheetData[$i]['3'],
-					'warga_domisili'=>$sheetData[$i]['4'],
-					'warga_jaminankesehatan'=>$sheetData[$i]['5'],
-					'warga_nomorjaminankesehatan'=>$sheetData[$i]['6'],
-					'warga_sktm'=>$sheetData[$i]['7'],
-					'warga_namakeluarga'=>$sheetData[$i]['8'],
-					'warga_alamatnamakeluarga'=>$sheetData[$i]['9'],
-					'warga_nohpkeluarga'=>$sheetData[$i]['10'],
-					'warga_nomorkk'=>$sheetData[$i]['11'],
-					'warga_nomorktp'=>$sheetData[$i]['12'],
-					'warga_nama'=>$sheetData[$i]['13'],
-					'warga_hubungankeluarga'=>$sheetData[$i]['14'],
-					'warga_alamatktp'=>$sheetData[$i]['15'],
-					'warga_jeniskelamin'=>$sheetData[$i]['16'],
-					'warga_tempatlahir'=>$sheetData[$i]['17'],
-					'warga_tanggallahir'=>$sheetData[$i]['18'],
-					'warga_nomorhp'=>$sheetData[$i]['19'],
-					'warga_statusnomor'=>$sheetData[$i]['20'],
-					'warga_email'=>$sheetData[$i]['21'],
-					'warga_agama'=>$sheetData[$i]['22'],
-					'warga_golongandarah'=>$sheetData[$i]['23'],
-					'warga_hobi'=>$sheetData[$i]['24'],
-					'warga_statusperkawainan'=>$sheetData[$i]['25'],
-					'warga_pendidikanterakhir'=>$sheetData[$i]['26'],
-					'warga_pekerjaan'=>$sheetData[$i]['27'],
-					'warga_alamatbekerja'=>$sheetData[$i]['28'],
-					'warga_npwp'=>$sheetData[$i]['29'],
-					'warga_nonpwp'=>$sheetData[$i]['30'],
-		    	));
-		    }
-			$query=array(
-				'data'=>$this->security->xss_clean($data),
-				'tabel'=>$this->master_tabel,
-			);
-			$insert=$this->Crud->insert_multiple($query);
-		}
-		if($insert){
-			$this->session->set_flashdata('success','simpan berhasil');
-			$dt['success']='input data berhasil';
-		}else{
-			$this->session->set_flashdata('error','simpan gagal');
-			$dt['error']='input data error';
-		}
-		//return $this->output->set_output(json_encode($dt));
-		redirect(site_url($this->default_url));
 	}
 	public function add(){
 		$global_set=array(
@@ -336,11 +222,11 @@ class Pendatang extends CI_Controller {
 			'url'=>$this->default_url, //AKAN DIREDIRECT KE INDEX
 		);
 		$global=$this->global_set($global_set);
-		$q_level=[
-			'tabel'=>'level',
+		$q_warga=[
+			'tabel'=>'wargakampung',
 		];
 		$data=array(
-			'level'=>$this->Crud->read($q_level)->result(),
+			'warga'=>$this->Crud->read($q_warga)->result(),
 			'global'=>$global,
 			);
 		$this->load->view($this->default_view.'add',$data);
@@ -374,9 +260,14 @@ class Pendatang extends CI_Controller {
 		);
 		$global=$this->global_set($global_set);
 		$query=array(
-			'tabel'=>$this->master_tabel,
-			'order'=>array('kolom'=>$this->id,'orderby'=>'DESC'),
-		);	
+			'select'=>'a.*,b.pendidikan_nama,c.norumah_nomor,c.norumah_keterangan,d.pendatang_alamatbaru,d.pendatang_alamatlama,d.pendatang_id',
+			'tabel'=>'wargakampung a',
+			'join'=>[['tabel'=>'pendidikan b','ON'=>'b.pendidikan_id=a.warga_idpendidikan','jenis'=>"iNNER"],
+			['tabel'=>'norumah c','ON'=>'c.norumah_id=a.warga_norumah','jenis'=>'INNER'],
+			['tabel'=>'pendatang d','ON'=>'d.pendatang_idwarga=a.warga_id','jenis'=>'INNER']
+			],
+			'order'=>array('kolom'=>'a.warga_nama','orderby'=>'ASC'),
+		);
 		if((isset($nama)) AND (isset($norumah))){
 		if($norumah!='0'){
 		 	// print_r($norumah.$nama);
@@ -389,7 +280,7 @@ class Pendatang extends CI_Controller {
 		}		
 		$data=array(
 			'global'=>$global,
-			'data'=>$this->Crud->read($query)->result(),
+			'data'=>$this->Crud->join($query)->result(),
 			'deskripsi'=>'dicetak dari sistem tanggal '.date('d-m-Y'),
 			'atributsistem'=>$this->duwi->atributsistem(),
 		);
@@ -412,24 +303,5 @@ class Pendatang extends CI_Controller {
 		echo "<h2 style='text-align:center'>Scan QRcode</h2>";
 		echo "<img src='".$url."' width='300px' height='300px' style='display: block; margin-left: auto;margin-right:auto; margin-top:50px'></img>";
 		echo "<p style='text-align:center;margin-top:20px'>".$isi."</p>";
-	}
-	public function detail(){
-		$id=$this->input->post('id');
-		$global_set=array(
-			'submenu'=>false,
-			'headline'=>'tambah data',
-			'url'=>$this->default_url, //AKAN DIREDIRECT KE INDEX
-		);
-		$global=$this->global_set($global_set);
-		$query=[
-			'tabel'=>$this->master_tabel,
-			'where'=>[['warga_id'=>$id]]
-		];
-		$r_query=$this->Crud->read($query)->row();
-		$data=[
-			'global'=>$global,
-			'data'=>$r_query
-		];
-		$this->load->view($this->default_view.'detail',$data);
 	}
 }

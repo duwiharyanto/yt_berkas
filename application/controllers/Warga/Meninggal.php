@@ -48,7 +48,7 @@ class Meninggal extends CI_Controller {
 			'url'=>$data['url'], //Deskripsi URL yang dilewatkan dari function
 			'ikon'=>"fa fa-tasks",
 			'view'=>$overwriteview,
-			'detail'=>true,
+			'detail'=>false,
 			'cetak'=>false,
 			'edit'=>true,
 			'delete'=>true,
@@ -76,39 +76,12 @@ class Meninggal extends CI_Controller {
 		$global=$this->global_set($global_set);
 
 		//CEK SUBMIT DATA
-		if($this->input->post('warga_nomorrumah')){
+		if($this->input->post('meninggal_idwarga')){
 			//PROSES SIMPAN
 			$data=array(
-				'warga_nomorrumah'=>$this->input->post('warga_nomorrumah'),
-				'warga_statustempattinggal'=>$this->input->post('warga_statustempattinggal'),
-				'warga_statusktp'=>$this->input->post('warga_statusktp'),
-				'warga_domisili'=>$this->input->post('warga_domisili'),
-				'warga_jaminankesehatan'=>$this->input->post('warga_jaminankesehatan'),
-				'warga_nomorjaminankesehatan'=>$this->input->post('warga_nomorjaminankesehatan'),
-				'warga_sktm'=>$this->input->post('warga_sktm'),
-				'warga_namakeluarga'=>$this->input->post('warga_namakeluarga'),
-				'warga_alamatnamakeluarga'=>$this->input->post('warga_alamatnamakeluarga'),
-				'warga_nohpkeluarga'=>$this->input->post('warga_nohpkeluarga'),
-				'warga_nomorkk'=>$this->input->post('warga_nomorkk'),
-				'warga_nomorktp'=>$this->input->post('warga_nomorktp'),
-				'warga_nama'=>$this->input->post('warga_nama'),
-				'warga_hubungankeluarga'=>$this->input->post('warga_hubungankeluarga'),
-				'warga_alamatktp'=>$this->input->post('warga_alamatktp'),
-				'warga_jeniskelamin'=>$this->input->post('warga_jeniskelamin'),
-				'warga_tempatlahir'=>$this->input->post('warga_tempatlahir'),
-				'warga_tanggallahir'=>date('Y-m-d',strtotime($this->input->post('warga_tanggallahir'))),
-				'warga_nomorhp'=>$this->input->post('warga_nomorhp'),
-				'warga_statusnomor'=>$this->input->post('warga_statusnomor'),
-				'warga_email'=>$this->input->post('warga_email'),
-				'warga_agama'=>$this->input->post('warga_agama'),
-				'warga_golongandarah'=>$this->input->post('warga_golongandarah'),
-				'warga_hobi'=>$this->input->post('warga_hobi'),
-				'warga_statusperkawainan'=>$this->input->post('warga_statusperkawainan'),
-				'warga_pendidikanterakhir'=>$this->input->post('warga_pendidikanterakhir'),
-				'warga_pekerjaan'=>$this->input->post('warga_pekerjaan'),
-				'warga_alamatbekerja'=>$this->input->post('warga_alamatbekerja'),
-				'warga_npwp'=>$this->input->post('warga_npwp'),
-				'warga_nonpwp'=>$this->input->post('warga_nonpwp'),
+				'meninggal_idwarga'=>$this->input->post('meninggal_idwarga'),
+				'meninggal_tanggal'=>date('Y-m-d',strtotime($this->input->post('meninggal_tanggal'))),
+				'meninggal_keterangan'=>$this->input->post('meninggal_keterangan'),
 			);
 			########################################################
 			// $file='reg_foto';
@@ -154,8 +127,13 @@ class Meninggal extends CI_Controller {
 		$global=$this->global_set($global_set);
 		//PROSES TAMPIL DATA
 		$query=array(
-			'tabel'=>$this->master_tabel,
-			'order'=>array('kolom'=>$this->id,'orderby'=>'DESC'),
+			'select'=>'a.*,b.pendidikan_nama,c.norumah_nomor,c.norumah_keterangan,d.meninggal_tanggal,d.meninggal_keterangan,d.meninggal_id',
+			'tabel'=>'wargakampung a',
+			'join'=>[['tabel'=>'pendidikan b','ON'=>'b.pendidikan_id=a.warga_idpendidikan','jenis'=>"iNNER"],
+			['tabel'=>'norumah c','ON'=>'c.norumah_id=a.warga_norumah','jenis'=>'INNER'],
+			['tabel'=>'meninggal d','ON'=>'d.meninggal_idwarga=a.warga_id','jenis'=>'INNER']
+			],
+			'order'=>array('kolom'=>'a.warga_nama','orderby'=>'ASC'),
 		);
 		if($this->input->post('nama')) {
 			$nama=$this->input->post('nama');
@@ -164,15 +142,15 @@ class Meninggal extends CI_Controller {
 			$norumah=$this->input->post('nomorumah');
 		}		
 		if($nama OR $norumah){
-		 	$query['like']=[['warga_nama'=>$nama]];
+		 	$query['like']=[['a.warga_nama'=>$nama]];
 			if($norumah){
 				// $query['like']=[['warga_nama'=>$nama],['warga_nomorrumah'=>$norumah]];
-				$query['where']=[['warga_nomorrumah'=>$norumah]];
+				$query['where']=[['a.warga_nomorrumah'=>$norumah]];
 			}	
 		}
 		$data=array(
 			'global'=>$global,
-			'data'=>$this->Crud->read($query)->result(),
+			'data'=>$this->Crud->join($query)->result(),
 		);
 
 		$this->load->view($this->default_view.'tabel',$data);
@@ -184,39 +162,12 @@ class Meninggal extends CI_Controller {
 		);
 		$global=$this->global_set($global_set);
 		$id=$this->input->post('id');
-		if($this->input->post('warga_nomorrumah')){
+		if($this->input->post('meninggal_idwarga')){
 			//PROSES SIMPAN
 			$data=array(
-				'warga_nomorrumah'=>$this->input->post('warga_nomorrumah'),
-				'warga_statustempattinggal'=>$this->input->post('warga_statustempattinggal'),
-				'warga_statusktp'=>$this->input->post('warga_statusktp'),
-				'warga_domisili'=>$this->input->post('warga_domisili'),
-				'warga_jaminankesehatan'=>$this->input->post('warga_jaminankesehatan'),
-				'warga_nomorjaminankesehatan'=>$this->input->post('warga_nomorjaminankesehatan'),
-				'warga_sktm'=>$this->input->post('warga_sktm'),
-				'warga_namakeluarga'=>$this->input->post('warga_namakeluarga'),
-				'warga_alamatnamakeluarga'=>$this->input->post('warga_alamatnamakeluarga'),
-				'warga_nohpkeluarga'=>$this->input->post('warga_nohpkeluarga'),
-				'warga_nomorkk'=>$this->input->post('warga_nomorkk'),
-				'warga_nomorktp'=>$this->input->post('warga_nomorktp'),
-				'warga_nama'=>$this->input->post('warga_nama'),
-				'warga_hubungankeluarga'=>$this->input->post('warga_hubungankeluarga'),
-				'warga_alamatktp'=>$this->input->post('warga_alamatktp'),
-				'warga_jeniskelamin'=>$this->input->post('warga_jeniskelamin'),
-				'warga_tempatlahir'=>$this->input->post('warga_tempatlahir'),
-				'warga_tanggallahir'=>date('Y-m-d',strtotime($this->input->post('warga_tanggallahir'))),
-				'warga_nomorhp'=>$this->input->post('warga_nomorhp'),
-				'warga_statusnomor'=>$this->input->post('warga_statusnomor'),
-				'warga_email'=>$this->input->post('warga_email'),
-				'warga_agama'=>$this->input->post('warga_agama'),
-				'warga_golongandarah'=>$this->input->post('warga_golongandarah'),
-				'warga_hobi'=>$this->input->post('warga_hobi'),
-				'warga_statusperkawainan'=>$this->input->post('warga_statusperkawainan'),
-				'warga_pendidikanterakhir'=>$this->input->post('warga_pendidikanterakhir'),
-				'warga_pekerjaan'=>$this->input->post('warga_pekerjaan'),
-				'warga_alamatbekerja'=>$this->input->post('warga_alamatbekerja'),
-				'warga_npwp'=>$this->input->post('warga_npwp'),
-				'warga_nonpwp'=>$this->input->post('warga_nonpwp'),
+				'meninggal_idwarga'=>$this->input->post('meninggal_idwarga'),
+				'meninggal_tanggal'=>date('Y-m-d',strtotime($this->input->post('meninggal_tanggal'))),
+				'meninggal_keterangan'=>$this->input->post('meninggal_keterangan'),
 			);
 			####################################################
 			// $file='user_foto';
@@ -252,7 +203,11 @@ class Meninggal extends CI_Controller {
 				'tabel'=>$this->master_tabel,
 				'where'=>array(array($this->id=>$id))
 			);
+			$q_warga=[
+				'tabel'=>'wargakampung',
+			];			
 			$data=array(
+				'warga'=>$this->Crud->read($q_warga)->result(),
 				'data'=>$this->Crud->read($query)->row(),
 				'global'=>$global,
 			);
@@ -336,11 +291,11 @@ class Meninggal extends CI_Controller {
 			'url'=>$this->default_url, //AKAN DIREDIRECT KE INDEX
 		);
 		$global=$this->global_set($global_set);
-		$q_level=[
-			'tabel'=>'level',
+		$q_warga=[
+			'tabel'=>'wargakampung',
 		];
 		$data=array(
-			'level'=>$this->Crud->read($q_level)->result(),
+			'warga'=>$this->Crud->read($q_warga)->result(),
 			'global'=>$global,
 			);
 		$this->load->view($this->default_view.'add',$data);
@@ -374,22 +329,27 @@ class Meninggal extends CI_Controller {
 		);
 		$global=$this->global_set($global_set);
 		$query=array(
-			'tabel'=>$this->master_tabel,
-			'order'=>array('kolom'=>$this->id,'orderby'=>'DESC'),
+			'select'=>'a.*,b.pendidikan_nama,c.norumah_nomor,c.norumah_keterangan,d.meninggal_tanggal,d.meninggal_keterangan,d.meninggal_id',
+			'tabel'=>'wargakampung a',
+			'join'=>[['tabel'=>'pendidikan b','ON'=>'b.pendidikan_id=a.warga_idpendidikan','jenis'=>"iNNER"],
+			['tabel'=>'norumah c','ON'=>'c.norumah_id=a.warga_norumah','jenis'=>'INNER'],
+			['tabel'=>'meninggal d','ON'=>'d.meninggal_idwarga=a.warga_id','jenis'=>'INNER']
+			],
+			'order'=>array('kolom'=>'a.warga_nama','orderby'=>'ASC'),
 		);	
 		if((isset($nama)) AND (isset($norumah))){
-		if($norumah!='0'){
-		 	// print_r($norumah.$nama);
-		 	// exit();
-			$query['where']=[['warga_nomorrumah'=>$norumah]];		 	
-		}		
-		if($nama!='0'){
-		 	$query['like']=[['warga_nama'=>$nama]];	
-		}			
+			if($norumah!='0'){
+			 	// print_r($norumah.$nama);
+			 	// exit();
+				$query['where']=[['a.warga_nomorrumah'=>$norumah]];		 	
+			}		
+			if($nama!='0'){
+			 	$query['like']=[['a.warga_nama'=>$nama]];	
+			}			
 		}		
 		$data=array(
 			'global'=>$global,
-			'data'=>$this->Crud->read($query)->result(),
+			'data'=>$this->Crud->join($query)->result(),
 			'deskripsi'=>'dicetak dari sistem tanggal '.date('d-m-Y'),
 			'atributsistem'=>$this->duwi->atributsistem(),
 		);
