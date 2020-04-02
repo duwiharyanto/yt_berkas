@@ -25,6 +25,7 @@
         <th width="8%">No</th>
         <th width="10%">Nomor Rumah</th>
         <th >Nama</th>
+        <th >Orang Tua</th>
         <th >Keterangan</th>
       </tr>
     </thead>
@@ -35,27 +36,17 @@
         <td><?=$i?></td>
         <td><?=$row->norumah_nomor?></td>
         <td><?=ucwords($row->warga_nama).'<br><i>Lahir : '.date('d-m-Y',strtotime($row->warga_tanggallahir)).'</i>'?></td>
+        <td><?=ucwords($row->orangtua)?></td>
         <td><?=ucwords($row->balita_keterangan)?></td>
       </tr>
-    <?php $i++;?>  
+    <?php $i++;?>
     <?php endforeach;?>
     </tbody>
-</table> 
+</table>
 <table width="100%" style="margin-top: 5px">
   <tr>
     <td  align="right"><i>Dicetak oleh sistem</i></td>
   </tr>
-</table> 
-<!--
-<table width="100%" style="margin-top: 100px">
-  <tr>
-    <td width="50%"></td>
-    <td width="50%" align="center">
-    <p> Disahkan, <?=date('d-m-Y')?></p><br><br><br><br>
-    <p style="margin-top: 50px"> <?=ucwords($atributsistem->setting_namapemilik)?></p>
-    </td>
-  </tr>
 </table>
--->
 </body>
 </html>

@@ -29,6 +29,10 @@
 									<input required type="text" name="warga_nama" class="form-control" title="Harus di isi" value="<?=$data->warga_nama?>">
 								</div>
 								<div class="form-group">
+									<label>Nomor ktp</label>
+									<input type="text" name="warga_noktp" class="form-control" title="Harus di isi" value="<?=$data->warga_noktp?>">
+								</div>
+								<div class="form-group">
 									<label>Jenis Kelamin</label>
 									<div class="">
 				      					<label style="padding-right: 20px">
@@ -36,7 +40,7 @@
 				      						Laki-Laki
 				      					</label>
 				      					<label style="padding-right: 20px">
-				      						<input required name="warga_jeniskelamin" <?=$data->warga_jeniskelamin==0 ? 'checked':''?> value="0" type="radio">
+				      						<input required name="warga_jeniskelamin" <?=$data->warga_jeniskelamin==0 ? 'checked':''?> value="" type="radio">
 				      						Perempuan
 				      					</label>
 				      				</div>

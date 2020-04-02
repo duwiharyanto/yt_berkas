@@ -81,6 +81,7 @@ class Balita extends CI_Controller {
 			$data=array(
 				'balita_idwarga'=>$this->input->post('balita_idwarga'),
 				'balita_keterangan'=>$this->input->post('balita_keterangan'),
+				'balita_idorangtua'=>$this->input->post('balita_idorangtua')
 			);
 			########################################################
 			// $file='reg_foto';
@@ -126,11 +127,12 @@ class Balita extends CI_Controller {
 		$global=$this->global_set($global_set);
 		//PROSES TAMPIL DATA
 		$query=array(
-			'select'=>'a.*,b.pendidikan_nama,c.norumah_nomor,c.norumah_keterangan,d.balita_keterangan,d.balita_id',
+			'select'=>'a.*,b.warga_nama AS orangtua,c.norumah_nomor,c.norumah_keterangan,d.balita_keterangan,d.balita_id',
 			'tabel'=>'wargakampung a',
-			'join'=>[['tabel'=>'pendidikan b','ON'=>'b.pendidikan_id=a.warga_idpendidikan','jenis'=>"iNNER"],
+			'join'=>[
 			['tabel'=>'norumah c','ON'=>'c.norumah_id=a.warga_norumah','jenis'=>'INNER'],
-			['tabel'=>'balita d','ON'=>'d.balita_idwarga=a.warga_id','jenis'=>'INNER']
+			['tabel'=>'balita d','ON'=>'d.balita_idwarga=a.warga_id','jenis'=>'INNER'],
+			['tabel'=>'wargakampung b','ON'=>'b.warga_id=d.balita_idorangtua','jenis'=>"INNER"],
 			],
 			'order'=>array('kolom'=>'a.warga_nama','orderby'=>'ASC'),
 		);
@@ -139,13 +141,13 @@ class Balita extends CI_Controller {
 		}
 		if($this->input->post('nomorumah')) {
 			$norumah=$this->input->post('nomorumah');
-		}		
+		}
 		if($nama OR $norumah){
 		 	$query['like']=[['warga_nama'=>$nama]];
 			if($norumah){
 				// $query['like']=[['warga_nama'=>$nama],['warga_nomorrumah'=>$norumah]];
 				$query['where']=[['warga_nomorrumah'=>$norumah]];
-			}	
+			}
 		}
 		$data=array(
 			'global'=>$global,
@@ -203,7 +205,7 @@ class Balita extends CI_Controller {
 			);
 			$q_warga=[
 				'tabel'=>'wargakampung',
-			];				
+			];
 			$data=array(
 				'warga'=>$this->Crud->read($q_warga)->result(),
 				'data'=>$this->Crud->read($query)->row(),
@@ -322,29 +324,30 @@ class Balita extends CI_Controller {
 	}
 	public function cetak($nama=null,$norumah=null){
 		$global_set=array(
-			'headline'=>'Daftar Warga',
+			'headline'=>'Daftar balita',
 			'url'=>$this->default_url,
 		);
 		$global=$this->global_set($global_set);
 		$query=array(
-			'select'=>'a.*,b.pendidikan_nama,c.norumah_nomor,c.norumah_keterangan,d.balita_keterangan,d.balita_id',
+			'select'=>'a.*,b.warga_nama AS orangtua,c.norumah_nomor,c.norumah_keterangan,d.balita_keterangan,d.balita_id',
 			'tabel'=>'wargakampung a',
-			'join'=>[['tabel'=>'pendidikan b','ON'=>'b.pendidikan_id=a.warga_idpendidikan','jenis'=>"iNNER"],
+			'join'=>[
 			['tabel'=>'norumah c','ON'=>'c.norumah_id=a.warga_norumah','jenis'=>'INNER'],
-			['tabel'=>'balita d','ON'=>'d.balita_idwarga=a.warga_id','jenis'=>'INNER']
+			['tabel'=>'balita d','ON'=>'d.balita_idwarga=a.warga_id','jenis'=>'INNER'],
+			['tabel'=>'wargakampung b','ON'=>'b.warga_id=d.balita_idorangtua','jenis'=>"INNER"],
 			],
 			'order'=>array('kolom'=>'a.warga_nama','orderby'=>'ASC'),
-		);	
+		);
 		if((isset($nama)) AND (isset($norumah))){
 		if($norumah!='0'){
 		 	// print_r($norumah.$nama);
 		 	// exit();
-			$query['where']=[['warga_nomorrumah'=>$norumah]];		 	
-		}		
+			$query['where']=[['warga_nomorrumah'=>$norumah]];
+		}
 		if($nama!='0'){
-		 	$query['like']=[['warga_nama'=>$nama]];	
-		}			
-		}		
+		 	$query['like']=[['warga_nama'=>$nama]];
+		}
+		}
 		$data=array(
 			'global'=>$global,
 			'data'=>$this->Crud->join($query)->result(),

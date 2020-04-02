@@ -45,7 +45,7 @@
                     <tr>
                       <td><?=$i?></td>
                       <td><?=$row->norumah_nomor?></td>
-                      <td><?=ucwords($row->warga_nama).'<br><i>Lahir : '.date('d-m-Y',strtotime($row->warga_tanggallahir)).'</i>'?></td>
+                      <td><?=ucwords($row->warga_nama).'<br><i>Lahir : '.date('d-m-Y',strtotime($row->warga_tanggallahir)).'</i>'.'<br><i>ktp : '.$row->warga_noktp.'</i>'?></td>
                       <td><?=$row->warga_nohp?></td>
                       <td><?=$row->pendidikan_nama?></td>
                       <td><?=$row->warga_jeniskelamin==1 ? 'Laki-Laki':'Perempuan'?></td>
