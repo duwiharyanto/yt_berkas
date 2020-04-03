@@ -12,15 +12,23 @@
 								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 		  						<div class="form-group d-none">
 			  						<label>id</label>
-			  						<input required readonly type="text" name="id" class="hide form-control" title="Harus di isi" value="<?=$data->norumah_id?>">
+			  						<input required readonly type="text" name="id" class="hide form-control" title="Harus di isi" value="<?=$data->berkas_id?>">
 			  					</div>
 								<div class="form-group">
-                                    <label>Nomor Rumah</label>
-                                    <input required type="text" name="norumah_nomor" class="form-control" title="Harus di isi" value="<?=$data->norumah_nomor?>">
+									<label>Nama File</label>
+									<input required name="berkas_nama" class="form-control" value="<?=$data->berkas_nama?>" />
+								</div>
+                                <div class="form-group">
+                                    <label>Kategori</label>
+                                    <select class="form-control select" name="berkas_kategoriid">
+                                        <?php foreach($kategori AS $row):?>
+                                            <option value="<?=$row->kategori_id?>" <?=$data->berkas_kategoriid==$row->kategori_id ? 'Selected':''?>><?=ucwords($row->kategori_kategori)?></option>
+                                        <?php endforeach;?>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Keterangan</label>
-                                    <textarea class="form-control" name="norumah_keterangan"><?=$data->norumah_keterangan?></textarea>
+                                    <label>File</label>
+                                    <input type="file" name="berkas_file" class="form-control">
                                 </div>
 							</div>
 						</div>

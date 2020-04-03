@@ -1,5 +1,5 @@
 <?php
-	function tombolaksi($global,$rowid,$segment=null){
+	function tombolaksi($global,$rowid,$segment=null,$berkasfile=null){
 		if($global->edit){
 			echo '
 			<button type="button"  id="'.$rowid.'" url="'.base_url($global->url.'edit').'" class="edit btn btn-primary btn-circle" data-toggle="tooltip" title="Edit">
@@ -26,5 +26,11 @@
 			</button>
 			';
 		}
+		if($global->download){
+			echo '
+			<a href="javascript:void(0)"  url="'.site_url($global->url.'/previewfile/'.$berkasfile).'" class="preview btn btn-primary btn-circle" data-toggle="tooltip" title="">
+				<i class="fa fa-download"></i>
+			</a>';
+		}		
 	}
 ?>

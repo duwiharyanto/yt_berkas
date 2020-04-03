@@ -7,6 +7,7 @@
     });
   $(document).ready(function(){
     edit();
+    preview();
     validasi();
     hapus();
     detail();
@@ -49,7 +50,7 @@
   })
   function add(){
     var url=$("#add").attr('url');
-    $("#konten").load(url);
+    $("#view").load(url);
   }
   function edit(){
     $('.edit').click(function(){
@@ -60,12 +61,27 @@
         url:url,
         data:{id:id},
         success:function(data){
-          $("#konten").html(data);
+          $("#form").html(data);
         }
       })
       return false;
     })
   }
+  function preview(){
+    $('.preview').click(function(){
+      var url=$(this).attr('url');
+      var id=$(this).attr('id');
+      $.ajax({
+        type:'POST',
+        url:url,
+        data:{id:id},
+        success:function(data){
+          $("#view").html(data);
+        }
+      })
+      return false;
+    })
+  }  
   function detail(){
     $('.detail').click(function(){
       var url=$(this).attr('url');
@@ -163,7 +179,7 @@
   }
   function loaddata(){
     var url='<?= base_url($global->url."tabel")?>';
-    $("#konten").load(url);
+    $("#view").load(url);
   }
   function hapus(){
     $('.hapus').click(function(){

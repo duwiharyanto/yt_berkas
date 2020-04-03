@@ -22,6 +22,8 @@ class Backup extends CI_Controller {
 		$this->load->library('Duwi');
 		$this->duwi->listakses($this->session->userdata('user_level'));
 		$this->duwi->cekadmin();
+		date_default_timezone_set('Asia/Jakarta');
+
 	}
 	//VARIABEL
 	private $master_tabel="setting"; //Mendefinisikan Nama Tabel
@@ -58,13 +60,12 @@ class Backup extends CI_Controller {
 	}
 	public function db(){
 		$this->load->dbutil();
-
 		$prefs = array(
 			'format' => 'zip',
 			'filename' => 'my_db_backup.sql'
 		);
 		$backup =& $this->dbutil->backup($prefs);
-		$db_name = 'backup-on-' . date("Y-m-d-H-i-s") . '.zip'; // file name
+		$db_name = 'backup-on-' . date("d-m-Y, H-i-s") . '.zip'; // file name
 		$save  = 'backupdb/' . $db_name; // dir name backup output destination
 
 		$this->load->helper('file');

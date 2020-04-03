@@ -250,7 +250,6 @@ class User extends CI_Controller {
 				'data'=>$this->Crud->read($query)->row(),
 				'level'=>$this->Crud->read($q_level)->result(),
 				'global'=>$global,
-				'menu'=>$this->menu(0),
 			);
 			//$this->viewdata($data);			
 			$this->load->view($this->default_view.'edit',$data);

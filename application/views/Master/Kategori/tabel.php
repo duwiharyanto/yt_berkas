@@ -10,8 +10,7 @@
                   <thead>
                     <tr >
                       <th width="5%">No</th>
-                      <th width="15%">Nomor Rumah</th>
-                      <th >Keterangan</th>
+                      <th >Kategori</th>
                       <th width=30%>Disimpan</th>
                       <th width="15%" class="text-center">Aksi</th>
                     </tr>
@@ -21,11 +20,10 @@
                     <?php foreach($data AS $row):?>
                     <tr>
                       <td><?=$i?></td>
-                      <td><?=$row->norumah_nomor?></td>
-                      <td><?=$row->norumah_keterangan?></td>
+                      <td><?=ucwords($row->kategori_kategori)?></td>
                       <td><?=date('d-m-Y',strtotime($row->created_at))?></td>
                       <td class="text-center">
-                        <?php tombolaksi($global,$row->norumah_id,$this->uri->segment(3))?>
+                        <?php tombolaksi($global,$row->kategori_id,$this->uri->segment(3))?>
                       </td>
                     </tr>
                   <?php $i++;?>
@@ -50,12 +48,8 @@
                                 <div class="col-sm-12">
                                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                                     <div class="form-group">
-                                        <label>Nomor Rumah</label>
-                                        <input required type="text" name="norumah_nomor" class="form-control" title="Harus di isi">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Keterangan</label>
-                                        <textarea class="form-control" name="norumah_keterangan"></textarea>
+                                        <label>Kategori</label>
+                                        <input required type="text" name="kategori_kategori" class="form-control" title="Harus di isi">
                                     </div>
                                 </div>
                             </div>

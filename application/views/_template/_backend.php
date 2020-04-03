@@ -85,7 +85,7 @@
                         <!-- Logo text image you can use text also
                         <span class="hidden-xs"><img src="<?=base_url()?>/plugins/images/eliteadmin-text.png" alt="home" /></span>
                         -->
-                        <span class="hidden-xs"><?=$this->session->userdata('atributsistem_namasistem') ? $this->session->userdata('atributsistem_namasistem'):'Dashboard' ?></span>
+                        <span class="hidden-xs"><span class="fa fa-file"></span> <?=$this->session->userdata('atributsistem_namasistem') ? $this->session->userdata('atributsistem_namasistem'):'Dashboard' ?></span>
                     </a>
                 </div>
                 <!-- /Logo -->

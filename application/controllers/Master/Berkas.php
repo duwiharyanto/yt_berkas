@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as writer;
 
-class Pendidikan extends CI_Controller {
+class Berkas extends CI_Controller {
 // class Registrasi extends Core {
 	public function __construct(){
 		parent::__construct();
@@ -24,12 +24,12 @@ class Pendidikan extends CI_Controller {
 		$this->duwi->cekadmin();
 	}
 	//VARIABEL
-	private $master_tabel="pendidikan"; //Mendefinisikan Nama Tabel
-	private $id="pendidikan_id";	//Menedefinisaikan Nama Id Tabel
-	private $default_url="Master/Pendidikan/"; //Mendefinisikan url controller
-	private $default_view="Master/Pendidikan/"; //Mendefinisiakn defaul view
+	private $master_tabel="berkas"; //Mendefinisikan Nama Tabel
+	private $id="berkas_id";	//Menedefinisaikan Nama Id Tabel
+	private $default_url="Master/Berkas/"; //Mendefinisikan url controller
+	private $default_view="Master/Berkas/"; //Mendefinisiakn defaul view
 	private $view="_template/_backend"; //Mendefinisikan Tamplate Root
-	private $path='./upload/registrasi/';
+	private $path='./upload/berkas/';
 	private $pathformatimport='./template/';
 
 	private function global_set($data){
@@ -38,8 +38,8 @@ class Pendidikan extends CI_Controller {
 			$overwriteview=$data['overwriteview'];
 			$menu_submenu=$data['menu_submenu'];
 		}else{
-			$overwriteview="views/Master/Pendidikan/index.php";
-			$menu_submenu='pendidikan';
+			$overwriteview="views/Master/Berkas/index.php";
+			$menu_submenu='berkas';
 		}
 		$data=array(
 			'menu'=>'master',//Seting menu yang aktif
@@ -52,39 +52,50 @@ class Pendidikan extends CI_Controller {
 			'print'=>false,
 			'edit'=>true,
 			'delete'=>true,
-			'download'=>false,
+			'download'=>true,
 			'tambah'=>false,
 			'import'=>false,
 			'qrcode'=>false,
+
 		);
 		return (object)$data; //MEMBUAT ARRAY DALAM BENTUK OBYEK
 	}
+	private function hapus_file($id){
+		$query=array(
+			'tabel'=>$this->master_tabel,
+			'where'=>array(array($this->id=>$id)),
+		);
+		$file=$this->Crud->read($query)->row();
+		if($file->berkas_file) unlink($this->path.$file->berkas_file);
+	}	
 	public function index()
 	{
 		$global_set=array(
-			'headline'=>'pendidikan',
+			'headline'=>'berkas upload',
 			'url'=>$this->default_url,
 		);
 		$global=$this->global_set($global_set);
 
 		//CEK SUBMIT DATA
-		if($this->input->post('pendidikan_nama')){
+		if($this->input->post('berkas_kategoriid')){
 			//PROSES SIMPAN
 			$data=array(
-				'pendidikan_nama'=>$this->input->post('pendidikan_nama'),
+				'berkas_kategoriid'=>$this->input->post('berkas_kategoriid'),
+				'berkas_nama'=>$this->input->post('berkas_nama'),
 			);
 			########################################################
-			// $file='reg_foto';
-			// if($_FILES[$file]['name']){
-			// 	if($this->duwi->gambarupload($this->path,$file)){
-			// 		$fileupload=$this->upload->data('file_name');
-			// 		$data[$file]=$fileupload;
-			// 	}else{
-			// 		$dt['error']=$this->upload->display_errors();
-			// 		return $this->output->set_output(json_encode($dt));
-			// 		//exit();
-			// 	}
-			// }
+			$file='berkas_file';
+			if($_FILES[$file]['name']){
+				if($this->duwi->fileupload($this->path,$file)){
+					$fileupload=$this->upload->data('file_name');
+					$data[$file]=$fileupload;
+					$data['berkas_kapasitas']=$this->upload->data('file_size');
+				}else{
+					$dt['error']=$this->upload->display_errors();
+					return $this->output->set_output(json_encode($dt));
+					//exit();
+				}
+			}
 			$query=array(
 				'data'=>$this->security->xss_clean($data),
 				'tabel'=>$this->master_tabel,
@@ -111,18 +122,21 @@ class Pendidikan extends CI_Controller {
 			'headline'=>'Data',
 			'url'=>$this->default_url,
 		);
-		//LOAD FUNCTION GLOBAL SET
 		$global=$this->global_set($global_set);
-		//PROSES TAMPIL DATA
 		$query=array(
-			'tabel'=>$this->master_tabel,
-			'order'=>array('kolom'=>$this->id,'orderby'=>'DESC'),
+			'select'=>'a.*,b.kategori_kategori',
+			'tabel'=>'berkas a',
+			'join'=>[['tabel'=>'kategori b','ON'=>'b.kategori_id=a.berkas_kategoriid','jenis'=>'INNER']],
+			'order'=>array('kolom'=>'a.berkas_id','orderby'=>'DESC'),
 		);
+		$q_kategori=[
+			'tabel'=>'kategori',
+		];		
 		$data=array(
 			'global'=>$global,
-			'data'=>$this->Crud->read($query)->result(),
+			'data'=>$this->Crud->join($query)->result(),
+			'kategori'=>$this->Crud->read($q_kategori)->result(),
 		);
-
 		$this->load->view($this->default_view.'tabel',$data);
 	}
 	public function edit(){
@@ -132,26 +146,28 @@ class Pendidikan extends CI_Controller {
 		);
 		$global=$this->global_set($global_set);
 		$id=$this->input->post('id');
-		if($this->input->post('pendidikan_nama')){
+		if($this->input->post('berkas_kategoriid')){
 			//PROSES SIMPAN
 			$data=array(
-				'pendidikan_nama'=>$this->input->post('pendidikan_nama'),
+				'berkas_kategoriid'=>$this->input->post('berkas_kategoriid'),
+				'berkas_nama'=>$this->input->post('berkas_nama'),
 			);
 			####################################################
-			// $file='user_foto';
-			// if($_FILES[$file]['name']){
-			// 	if($this->gambarupload($this->path,$file)){
-			// 		if($id){
-			// 			$this->hapus_file($id);
-			// 		}
-			// 		$fileupload=$this->upload->data('file_name');
-			// 		$data[$file]=$fileupload;
-			// 	}else{
-			// 		$dt['error']=$this->upload->display_errors();
-			// 		return $this->output->set_output(json_encode($dt));
-			// 		//exit();
-			// 	}
-			// }
+			$file='berkas_file';
+			if($_FILES[$file]['name']){
+				if($this->gambarupload($this->path,$file)){
+					if($id){
+						$this->hapus_file($id);
+					}
+					$fileupload=$this->upload->data('file_name');
+					$data[$file]=$fileupload;
+					$data['berkas_kapasitas']=$this->upload->data('file_size');
+				}else{
+					$dt['error']=$this->upload->display_errors();
+					return $this->output->set_output(json_encode($dt));
+					//exit();
+				}
+			}
 			$query=array(
 				'data'=>$this->security->xss_clean($data),
 				'tabel'=>$this->master_tabel,
@@ -171,8 +187,12 @@ class Pendidikan extends CI_Controller {
 				'tabel'=>$this->master_tabel,
 				'where'=>array(array($this->id=>$id))
 			);
+			$q_kategori=[
+				'tabel'=>'kategori',
+			];				
 			$data=array(
 				'data'=>$this->Crud->read($query)->row(),
+				'kategori'=>$this->Crud->read($q_kategori)->result(),
 				'global'=>$global,
 			);
 			//$this->viewdata($data);
@@ -186,11 +206,11 @@ class Pendidikan extends CI_Controller {
 			'url'=>$this->default_url, //AKAN DIREDIRECT KE INDEX
 		);
 		$global=$this->global_set($global_set);
-		$q_level=[
-			'tabel'=>'level',
+		$q_kategori=[
+			'tabel'=>'kategori',
 		];
 		$data=array(
-			'level'=>$this->Crud->read($q_level)->result(),
+			'kategori'=>$this->Crud->read($q_kategori)->result(),
 			'global'=>$global,
 			);
 		$this->load->view($this->default_view.'add',$data);
@@ -198,7 +218,7 @@ class Pendidikan extends CI_Controller {
 	public function hapus(){
 		$id=$this->input->post('id');
 		#############################
-		//$this->hapus_file($id);
+		$this->hapus_file($id);
 		$query=array(
 			'tabel'=>$this->master_tabel,
 			'where'=>array($this->id=>$id),
@@ -214,7 +234,23 @@ class Pendidikan extends CI_Controller {
 		}
 		return $this->output->set_output(json_encode($dt));
 	}
-	public function downloadtemplate($file){
-		$this->downloadfile($this->pathformatimport,$file);
+	public function downloadfile($file){
+		$this->duwi->downloadfile($this->pathformatimport,$file);
 	}
+	public function previewfile($file){
+		$global_set=array(
+			'submenu'=>false,
+			'headline'=>'preview',
+			'url'=>$this->default_url, //AKAN DIREDIRECT KE INDEX
+		);	
+		$global=$this->global_set($global_set);
+		$data=array(
+			'global'=>$global,
+			'file'=>base_url($this->path.$file),
+			'cekfile'=>$this->path.$file,
+		);
+		// echo $data['file'];
+		// exit();
+		$this->load->view($this->default_view.'previewfile',$data);		
+	}	
 }

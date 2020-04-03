@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as writer;
 
-class Norumah extends CI_Controller {
+class Kategori extends CI_Controller {
 // class Registrasi extends Core {
 	public function __construct(){
 		parent::__construct();
@@ -24,10 +24,10 @@ class Norumah extends CI_Controller {
 		$this->duwi->cekadmin();
 	}
 	//VARIABEL
-	private $master_tabel="norumah"; //Mendefinisikan Nama Tabel
-	private $id="norumah_id";	//Menedefinisaikan Nama Id Tabel
-	private $default_url="Master/Norumah/"; //Mendefinisikan url controller
-	private $default_view="Master/Norumah/"; //Mendefinisiakn defaul view
+	private $master_tabel="kategori"; //Mendefinisikan Nama Tabel
+	private $id="kategori_id";	//Menedefinisaikan Nama Id Tabel
+	private $default_url="Master/Kategori/"; //Mendefinisikan url controller
+	private $default_view="Master/Kategori/"; //Mendefinisiakn defaul view
 	private $view="_template/_backend"; //Mendefinisikan Tamplate Root
 	private $path='./upload/registrasi/';
 	private $pathformatimport='./template/';
@@ -38,8 +38,8 @@ class Norumah extends CI_Controller {
 			$overwriteview=$data['overwriteview'];
 			$menu_submenu=$data['menu_submenu'];
 		}else{
-			$overwriteview="views/Master/Norumah/index.php";
-			$menu_submenu='nomor_rumah';
+			$overwriteview="views/Master/Kategori/index.php";
+			$menu_submenu='kategori';
 		}
 		$data=array(
 			'menu'=>'master',//Seting menu yang aktif
@@ -70,17 +70,16 @@ class Norumah extends CI_Controller {
 	public function index()
 	{
 		$global_set=array(
-			'headline'=>'Nomor Rumah Warga',
+			'headline'=>'Kategori Berkas',
 			'url'=>$this->default_url,
 		);
 		$global=$this->global_set($global_set);
 
 		//CEK SUBMIT DATA
-		if($this->input->post('norumah_nomor')){
+		if($this->input->post('kategori_kategori')){
 			//PROSES SIMPAN
 			$data=array(
-				'norumah_nomor'=>$this->input->post('norumah_nomor'),
-				'norumah_keterangan'=>$this->input->post('norumah_keterangan'),
+				'kategori_kategori'=>$this->input->post('kategori_kategori'),
 			);
 			########################################################
 			// $file='reg_foto';
@@ -156,11 +155,10 @@ class Norumah extends CI_Controller {
 		);
 		$global=$this->global_set($global_set);
 		$id=$this->input->post('id');
-		if($this->input->post('norumah_nomor')){
+		if($this->input->post('kategori_kategori')){
 			//PROSES SIMPAN
 			$data=array(
-				'norumah_nomor'=>$this->input->post('norumah_nomor'),
-				'norumah_keterangan'=>$this->input->post('norumah_keterangan'),
+				'kategori_kategori'=>$this->input->post('kategori_kategori'),
 			);
 			####################################################
 			// $file='user_foto';

@@ -27,7 +27,8 @@
                         <thead>
                             <tr >
                                 <th width='5%'>No</th>
-                                <th width="50%">Pendidikan</th>
+                                <th width="25%">Berkas</th>
+                                <th width="25%">Kategori</th>
                                 <th>Disimpan</th>
                                 <th class="text-center" width="15%">Aksi</th>
                             </tr>
@@ -37,10 +38,11 @@
                             <?php foreach($data AS $row):?>
                                 <tr>
                                     <td><?=$i?></td>
-                                    <td><?=ucwords($row->pendidikan_nama)?></td>
+                                    <td><?=ucwords($row->berkas_nama)?></td>
+                                    <td><?=ucwords($row->kategori_kategori)?></td>
                                     <td><?=date('d-m-Y',strtotime($row->created_at))?></td>
                                     <td class="text-center">
-                                        <?php tombolaksi($global,$row->pendidikan_id,$this->uri->segment(3)) //include 'button.php';?>
+                                        <?php tombolaksi($global,$row->berkas_id,$this->uri->segment(3),$row->berkas_file);?>
                                     </td>
                                 </tr>
                                 <?php $i++;?>
@@ -65,9 +67,21 @@
     							<div class="col-sm-12">
     								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
     								<div class="form-group">
-    									<label>Pendidikan</label>
-    									<input required name="pendidikan_nama" class="form-control"/>
+    									<label>Nama File</label>
+    									<input required name="berkas_nama" class="form-control"/>
     								</div>
+                                    <div class="form-group">
+                                        <label>Kategori</label>
+                                        <select class="form-control select" name="berkas_kategoriid">
+                                            <?php foreach($kategori AS $row):?>
+                                                <option value="<?=$row->kategori_id?>"><?=ucwords($row->kategori_kategori)?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>File</label>
+                                        <input type="file" name="berkas_file" class="form-control">
+                                    </div>
     							</div>
     						</div>
     						<div class="row">

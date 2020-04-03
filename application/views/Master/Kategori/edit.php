@@ -12,12 +12,12 @@
 								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 		  						<div class="form-group d-none">
 			  						<label>id</label>
-			  						<input required readonly type="text" name="id" class="hide form-control" title="Harus di isi" value="<?=$data->pendidikan_id?>">
+			  						<input required readonly type="text" name="id" class="hide form-control" title="Harus di isi" value="<?=$data->kategori_id?>">
 			  					</div>
-								<div class="form-group">
-									<label>Pendidikan</label>
-									<input required name="pendidikan_nama" class="form-control" value="<?=$data->pendidikan_nama?>"/>
-								</div>
+                                <div class="form-group">
+                                    <label>Kategori</label>
+                                    <input required type="text" name="kategori_kategori" class="form-control" title="Harus di isi" value="<?=$data->kategori_kategori?>">
+                                </div>
 							</div>
 						</div>
 			  			<div class="row">
