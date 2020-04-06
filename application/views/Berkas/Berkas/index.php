@@ -48,6 +48,7 @@
 	</div>
 </div>
 <script type="text/javascript">
+	$('.select').select2();
 	$(document).ready(function(){
 		var url=$('#tabel').attr('url');
 		setTimeout(function () {

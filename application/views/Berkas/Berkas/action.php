@@ -11,7 +11,7 @@
     validasi();
     hapus();
     detail();
-    $('.select').select2();
+    
     $('.datepicker').datepicker({
         autoclose: true,
         todayHighlight: true,
@@ -50,7 +50,7 @@
   })
   function add(){
     var url=$("#add").attr('url');
-    $("#view").load(url);
+    $("#tabel").load(url);
   }
   function edit(){
     $('.edit').click(function(){
@@ -61,7 +61,7 @@
         url:url,
         data:{id:id},
         success:function(data){
-          $("#form").html(data);
+          $("#tabel").html(data);
         }
       })
       return false;
