@@ -7,6 +7,7 @@
     });
   $(document).ready(function(){
     edit();
+    preview();
     validasi();
     hapus();
     detail();
@@ -60,12 +61,27 @@
         url:url,
         data:{id:id},
         success:function(data){
-          $("#view").html(data);
+          $("#form").html(data);
         }
       })
       return false;
     })
   }
+  function preview(){
+    $('.preview').click(function(){
+      var url=$(this).attr('url');
+      var id=$(this).attr('id');
+      $.ajax({
+        type:'POST',
+        url:url,
+        data:{id:id},
+        success:function(data){
+          $("#tabel").html(data);
+        }
+      })
+      return false;
+    })
+  }  
   function detail(){
     $('.detail').click(function(){
       var url=$(this).attr('url');
@@ -121,7 +137,6 @@
             status:'success',
             msg:'simpan berhasil',
           };
-
           notifikasi(param);
           loaddata();
           console.log(data.success);
@@ -163,8 +178,8 @@
   }
   function loaddata(){
     var url='<?= base_url($global->url."tabel")?>';
-    $("#view").load(url);
-  }
+    $("#tabel").load(url);
+  } 
   function hapus(){
     $('.hapus').click(function(){
       var url=$(this).attr('url');

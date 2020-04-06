@@ -26,8 +26,8 @@ class Berkas extends CI_Controller {
 	//VARIABEL
 	private $master_tabel="berkas"; //Mendefinisikan Nama Tabel
 	private $id="berkas_id";	//Menedefinisaikan Nama Id Tabel
-	private $default_url="Master/Berkas/"; //Mendefinisikan url controller
-	private $default_view="Master/Berkas/"; //Mendefinisiakn defaul view
+	private $default_url="Berkas/Berkas/"; //Mendefinisikan url controller
+	private $default_view="Berkas/Berkas/"; //Mendefinisiakn defaul view
 	private $view="_template/_backend"; //Mendefinisikan Tamplate Root
 	private $path='./upload/berkas/';
 	private $pathformatimport='./template/';
@@ -38,7 +38,7 @@ class Berkas extends CI_Controller {
 			$overwriteview=$data['overwriteview'];
 			$menu_submenu=$data['menu_submenu'];
 		}else{
-			$overwriteview="views/Master/Berkas/index.php";
+			$overwriteview="views/Berkas/Berkas/index.php";
 			$menu_submenu='berkas';
 		}
 		$data=array(
@@ -110,7 +110,11 @@ class Berkas extends CI_Controller {
 			}
 			return $this->output->set_output(json_encode($dt));
 		}else{
+			$q_kategori=[
+				'tabel'=>'kategori',
+			];				
 			$data=array(
+				'kategori'=>$this->Crud->read($q_kategori)->result(),
 				'global'=>$global,
 				'menu'=>$this->duwi->menu_backend($this->session->userdata('user_level')),
 			);
@@ -119,7 +123,7 @@ class Berkas extends CI_Controller {
 	}
 	public function tabel(){
 		$global_set=array(
-			'headline'=>'Data',
+			'headline'=>'Pencarian',
 			'url'=>$this->default_url,
 		);
 		$global=$this->global_set($global_set);
@@ -129,13 +133,18 @@ class Berkas extends CI_Controller {
 			'join'=>[['tabel'=>'kategori b','ON'=>'b.kategori_id=a.berkas_kategoriid','jenis'=>'INNER']],
 			'order'=>array('kolom'=>'a.berkas_id','orderby'=>'DESC'),
 		);
-		$q_kategori=[
-			'tabel'=>'kategori',
-		];		
+		if($this->input->post('berkas')){
+			$namafile=$this->input->post('berkas');
+			$query['like']=[['a.berkas_nama'=>$namafile]];		
+		}
+		if($this->input->post('kategoriid')){
+			$kategoriid=$this->input->post('kategoriid');
+			$query['where']=[['a.berkas_kategoriid'=>$kategoriid]];		
+		}				
+	
 		$data=array(
 			'global'=>$global,
 			'data'=>$this->Crud->join($query)->result(),
-			'kategori'=>$this->Crud->read($q_kategori)->result(),
 		);
 		$this->load->view($this->default_view.'tabel',$data);
 	}
@@ -238,7 +247,7 @@ class Berkas extends CI_Controller {
 		$this->duwi->downloadfile($this->pathformatimport,$file);
 	}
 	public function previewfile($file=null){
-		if(!$file)$file='file tidak ada';
+		if(!$file) $file='tidak ada';
 		$global_set=array(
 			'submenu'=>false,
 			'headline'=>'preview',
@@ -250,8 +259,6 @@ class Berkas extends CI_Controller {
 			'file'=>base_url($this->path.$file),
 			'cekfile'=>$this->path.$file,
 		);
-		// echo $data['file'];
-		// exit();
 		$this->load->view($this->default_view.'previewfile',$data);		
 	}	
 }

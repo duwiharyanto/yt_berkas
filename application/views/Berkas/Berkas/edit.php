@@ -12,24 +12,24 @@
 								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 		  						<div class="form-group d-none">
 			  						<label>id</label>
-			  						<input required readonly type="text" name="id" class="hide form-control" title="Harus di isi" value="<?=$data->meninggal_id?>">
+			  						<input required readonly type="text" name="id" class="hide form-control" title="Harus di isi" value="<?=$data->berkas_id?>">
 			  					</div>
 								<div class="form-group">
-									<label>Pasien</label>
-									<select class="form-control select" name="meninggal_idwarga">
-										<?php foreach($warga AS $val):?>
-											<option value="<?=$val->warga_id?>" <?=$data->meninggal_idwarga==$val->warga_id ? 'selected':''?>><?= ucwords($val->warga_nama)?></option>
-										<?php endforeach;?>
-									</select>
+									<label>Nama File</label>
+									<input required name="berkas_nama" class="form-control" value="<?=$data->berkas_nama?>" />
 								</div>
-								<div class="form-group">
-									<label>Tanggal</label>
-									<input type="text" class="form-control datepicker" name="meninggal_tanggal" value="<?=date('d-m-Y',strtotime($data->meninggal_tanggal))?>">
-								</div>		
-								<div class="form-group">
-									<label>Keterangan</label>
-									<textarea required type="text" name="meninggal_keterangan" class="form-control" title="Harus di isi" rows="5"><?=$data->meninggal_keterangan?></textarea>
-								</div>			  					
+                                <div class="form-group">
+                                    <label>Kategori</label>
+                                    <select class="form-control select" name="berkas_kategoriid">
+                                        <?php foreach($kategori AS $row):?>
+                                            <option value="<?=$row->kategori_id?>" <?=$data->berkas_kategoriid==$row->kategori_id ? 'Selected':''?>><?=ucwords($row->kategori_kategori)?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>File</label>
+                                    <input type="file" name="berkas_file" class="form-control">
+                                </div>
 							</div>
 						</div>
 			  			<div class="row">

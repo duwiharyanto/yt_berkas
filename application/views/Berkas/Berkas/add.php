@@ -8,43 +8,25 @@
 	            <div class="panel-body">
 					<form id="forminput" class="formaction" method="POST" action="javascript:void(0)" url="<?= base_url($global->url)?>"  enctype="multipart/form-data">
 						<div class="row">
-							<div class="col-sm-12">		
+							<div class="col-sm-12">
 								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-								<div class="form-group d-none">
-									<label>Kegitan Id</label>
-									<input readonly required type="text" name="reg_kegiatanid" class="form-control" title="Harus di isi" value="<?=$kegiatan->kegiatan_id?>">
+								<div class="form-group">
+									<label>Pendidikan</label>
+									<input required name="pendidikan_nama" class="form-control"/>
 								</div>
-								<div class="form-group">
-									<label>Nama</label>
-									<input required type="text" name="reg_nama" class="form-control" title="Harus di isi">
-								</div>
-								<div class="form-group">
-									<label>Nomor Telepon</label>
-									<input required name="reg_notlp" class="form-control" type="text"></input>
-								</div>
-								<div class="form-group">
-									<label>Email</label>
-									<input required name="reg_email" class="form-control" type="text"></input>
-								</div>	      			
-								<div class="form-group">
-									<label>Alamat</label>
-									<textarea class="form-control" name="reg_alamat" rows="8"></textarea>
-								</div>											 
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-sm-12">						
+							<div class="col-sm-12">
 								<div class="form-group">
 									<button type="submit" value="submit" name="submit" class="btn btn-primary btn-block btn-flat">Simpan</button>
-								</div>														
+								</div>
 							</div>
 						</div>
 					</form>
 	            </div>
 	        </div>
-	    </div>	
-	    		
-	</div> 
+	    </div>
+	</div>
 </div>
 <?php include 'action.php';?>
-
