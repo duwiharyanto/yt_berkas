@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as writer;
 
-class Berkas extends CI_Controller {
+class Nomorsurat extends CI_Controller {
 // class Registrasi extends Core {
 	public function __construct(){
 		parent::__construct();
@@ -24,10 +24,10 @@ class Berkas extends CI_Controller {
 		$this->duwi->cekadmin();
 	}
 	//VARIABEL
-	private $master_tabel="berkas"; //Mendefinisikan Nama Tabel
-	private $id="berkas_id";	//Menedefinisaikan Nama Id Tabel
-	private $default_url="Berkas/Berkas/"; //Mendefinisikan url controller
-	private $default_view="Berkas/Berkas/"; //Mendefinisiakn defaul view
+	private $master_tabel="nomorsurat"; //Mendefinisikan Nama Tabel
+	private $id="nomorsurat_id";	//Menedefinisaikan Nama Id Tabel
+	private $default_url="Nomorsurat/Nomorsurat/"; //Mendefinisikan url controller
+	private $default_view="Nomorsurat/Nomorsurat/"; //Mendefinisiakn defaul view
 	private $view="_template/_backend"; //Mendefinisikan Tamplate Root
 	private $path='./upload/berkas/';
 	private $pathformatimport='./template/';
@@ -38,8 +38,8 @@ class Berkas extends CI_Controller {
 			$overwriteview=$data['overwriteview'];
 			$menu_submenu=$data['menu_submenu'];
 		}else{
-			$overwriteview="views/Berkas/Berkas/index.php";
-			$menu_submenu='berkas';
+			$overwriteview="views/Nomorsurat/Nomorsurat/index.php";
+			$menu_submenu=false;
 		}
 		$data=array(
 			'menu'=>'master',//Seting menu yang aktif
@@ -71,31 +71,37 @@ class Berkas extends CI_Controller {
 	public function index()
 	{
 		$global_set=array(
-			'headline'=>'pencarian',
+			'headline'=>'surat keterangan sehat',
 			'url'=>$this->default_url,
 		);
 		$global=$this->global_set($global_set);
 
 		//CEK SUBMIT DATA
-		if($this->input->post('berkas_kategoriid')){
+		if($this->input->post('nomorsurat_norm')){
 			//PROSES SIMPAN
 			$data=array(
-				'berkas_kategoriid'=>$this->input->post('berkas_kategoriid'),
-				'berkas_nama'=>$this->input->post('berkas_nama'),
+				'nomorsurat_nomor'=>$this->input->post('nomorsurat_nomor'),
+				'nomorsurat_norm'=>$this->input->post('nomorsurat_norm'),
+				'nomorsurat_nama'=>$this->input->post('nomorsurat_nama'),
+				'nomorsurat_unit'=>$this->input->post('nomorsurat_unit'),
+				'nomorsurat_ijin'=>$this->input->post('nomorsurat_ijin'),
+				'nomorsurat_tanggal'=>date('Y-m-d',strtotime($this->input->post('nomorsurat_tanggal'))),
+				'nomorsurat_bulan'=>$this->duwi->bulannama(str_replace('0','',date('m',strtotime($this->input->post('nomorsurat_tanggal'))))),
+				'nomorsurat_iduser'=>$this->session->userdata('user_id'),
 			);
 			########################################################
-			$file='berkas_file';
-			if($_FILES[$file]['name']){
-				if($this->duwi->fileupload($this->path,$file)){
-					$fileupload=$this->upload->data('file_name');
-					$data[$file]=$fileupload;
-					$data['berkas_kapasitas']=$this->upload->data('file_size');
-				}else{
-					$dt['error']=$this->upload->display_errors();
-					return $this->output->set_output(json_encode($dt));
-					//exit();
-				}
-			}
+			// $file='berkas_file';
+			// if($_FILES[$file]['name']){
+			// 	if($this->duwi->fileupload($this->path,$file)){
+			// 		$fileupload=$this->upload->data('file_name');
+			// 		$data[$file]=$fileupload;
+			// 		$data['berkas_kapasitas']=$this->upload->data('file_size');
+			// 	}else{
+			// 		$dt['error']=$this->upload->display_errors();
+			// 		return $this->output->set_output(json_encode($dt));
+			// 		//exit();
+			// 	}
+			// }
 			$query=array(
 				'data'=>$this->security->xss_clean($data),
 				'tabel'=>$this->master_tabel,
@@ -110,11 +116,7 @@ class Berkas extends CI_Controller {
 			}
 			return $this->output->set_output(json_encode($dt));
 		}else{
-			$q_kategori=[
-				'tabel'=>'kategori',
-			];				
 			$data=array(
-				'kategori'=>$this->Crud->read($q_kategori)->result(),
 				'global'=>$global,
 				'menu'=>$this->duwi->menu_backend($this->session->userdata('user_level')),
 			);
@@ -123,25 +125,16 @@ class Berkas extends CI_Controller {
 	}
 	public function tabel(){
 		$global_set=array(
-			'headline'=>'Pencarian',
+			'headline'=>'Data',
 			'url'=>$this->default_url,
 		);
 		$global=$this->global_set($global_set);
 		$query=array(
-			'select'=>'a.*,b.kategori_kategori',
-			'tabel'=>'berkas a',
-			'join'=>[['tabel'=>'kategori b','ON'=>'b.kategori_id=a.berkas_kategoriid','jenis'=>'INNER']],
-			'order'=>array('kolom'=>'a.berkas_id','orderby'=>'DESC'),
-		);
-		if($this->input->post('berkas')){
-			$namafile=$this->input->post('berkas');
-			$query['like']=[['a.berkas_nama'=>$namafile]];		
-		}
-		if($this->input->post('kategoriid')){
-			$kategoriid=$this->input->post('kategoriid');
-			$query['where']=[['a.berkas_kategoriid'=>$kategoriid]];		
-		}				
-	
+			'select'=>'a.*,b.user_nama',
+			'tabel'=>'nomorsurat a',
+			'join'=>[['tabel'=>'user b','ON'=>'b.user_id=a.nomorsurat_iduser','jenis'=>'INNER']],
+			'order'=>array('kolom'=>'a.nomorsurat_id','orderby'=>'DESC'),
+		);	
 		$data=array(
 			'global'=>$global,
 			'data'=>$this->Crud->join($query)->result(),
@@ -155,28 +148,30 @@ class Berkas extends CI_Controller {
 		);
 		$global=$this->global_set($global_set);
 		$id=$this->input->post('id');
-		if($this->input->post('berkas_kategoriid')){
+		if($this->input->post('nomorsurat_norm')){
 			//PROSES SIMPAN
 			$data=array(
-				'berkas_kategoriid'=>$this->input->post('berkas_kategoriid'),
-				'berkas_nama'=>$this->input->post('berkas_nama'),
+				'nomorsurat_norm'=>$this->input->post('nomorsurat_norm'),
+				'nomorsurat_nama'=>$this->input->post('nomorsurat_nama'),
+				'nomorsurat_unit'=>$this->input->post('nomorsurat_unit'),
+				'nomorsurat_ijin'=>$this->input->post('nomorsurat_ijin'),
 			);
 			####################################################
-			$file='berkas_file';
-			if($_FILES[$file]['name']){
-				if($this->gambarupload($this->path,$file)){
-					if($id){
-						$this->hapus_file($id);
-					}
-					$fileupload=$this->upload->data('file_name');
-					$data[$file]=$fileupload;
-					$data['berkas_kapasitas']=$this->upload->data('file_size');
-				}else{
-					$dt['error']=$this->upload->display_errors();
-					return $this->output->set_output(json_encode($dt));
-					//exit();
-				}
-			}
+			// $file='berkas_file';
+			// if($_FILES[$file]['name']){
+			// 	if($this->gambarupload($this->path,$file)){
+			// 		if($id){
+			// 			$this->hapus_file($id);
+			// 		}
+			// 		$fileupload=$this->upload->data('file_name');
+			// 		$data[$file]=$fileupload;
+			// 		$data['berkas_kapasitas']=$this->upload->data('file_size');
+			// 	}else{
+			// 		$dt['error']=$this->upload->display_errors();
+			// 		return $this->output->set_output(json_encode($dt));
+			// 		//exit();
+			// 	}
+			// }
 			$query=array(
 				'data'=>$this->security->xss_clean($data),
 				'tabel'=>$this->master_tabel,
@@ -215,11 +210,17 @@ class Berkas extends CI_Controller {
 			'url'=>$this->default_url, //AKAN DIREDIRECT KE INDEX
 		);
 		$global=$this->global_set($global_set);
-		$q_kategori=[
-			'tabel'=>'kategori',
+		$db_nourut=$this->Crud->hardcode("SELECT LEFT(nomorsurat_nomor,4) AS kode from nomorsurat ORDER BY kode DESC LIMIT 1")->row();
+		$ar_noskm=[
+			'bulan'=>str_replace('0','',date('m')),
+			'nomor'=>$db_nourut->kode,
+			'kodeberkas'=>'B.4',
+			'instansi'=>'RSUII',
+			'tahun'=>date('Y')
 		];
+		$noskm=$this->duwi->nomorskm($ar_noskm);		
 		$data=array(
-			'kategori'=>$this->Crud->read($q_kategori)->result(),
+			'noskm'=>$noskm,
 			'global'=>$global,
 			);
 		$this->load->view($this->default_view.'add',$data);
@@ -227,7 +228,7 @@ class Berkas extends CI_Controller {
 	public function hapus(){
 		$id=$this->input->post('id');
 		#############################
-		$this->hapus_file($id);
+		//$this->hapus_file($id);
 		$query=array(
 			'tabel'=>$this->master_tabel,
 			'where'=>array($this->id=>$id),
@@ -247,7 +248,7 @@ class Berkas extends CI_Controller {
 		$this->duwi->downloadfile($this->pathformatimport,$file);
 	}
 	public function previewfile($file=null){
-		if(!$file) $file='tidak ada';
+		if(!$file)$file='file tidak ada';
 		$global_set=array(
 			'submenu'=>false,
 			'headline'=>'preview',
@@ -259,6 +260,35 @@ class Berkas extends CI_Controller {
 			'file'=>base_url($this->path.$file),
 			'cekfile'=>$this->path.$file,
 		);
+		// echo $data['file'];
+		// exit();
 		$this->load->view($this->default_view.'previewfile',$data);		
 	}	
+	public function cetak($nama=null,$norumah=null){
+		$global_set=array(
+			'headline'=>'Daftar Nomor Surat',
+			'url'=>$this->default_url,
+		);
+		$global=$this->global_set($global_set);
+		$query=array(
+			'select'=>'a.*,b.user_nama',
+			'tabel'=>'nomorsurat a',
+			'join'=>[['tabel'=>'user b','ON'=>'b.user_id=a.nomorsurat_iduser','jenis'=>'INNER']],
+			'order'=>array('kolom'=>'a.nomorsurat_id','orderby'=>'DESC'),
+		);
+		$data=array(
+			'global'=>$global,
+			'data'=>$this->Crud->join($query)->result(),
+			'deskripsi'=>'dicetak dari sistem tanggal '.date('d-m-Y'),
+			'atributsistem'=>$this->duwi->atributsistem(),
+		);
+		$view=$this->load->view($this->default_view.'cetak',$data,true);
+		$cetak=[
+			'judul'=>$global_set['headline'],
+			'view'=>$view,
+			'kertas'=>'A4-l',
+		];
+		$this->duwi->prosescetak($cetak);
+	}	
 }
+		

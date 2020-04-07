@@ -20,15 +20,15 @@ class Berkas extends CI_Controller {
 		$this->load->model('Model','Crud');
 		$this->load->library('Duwi');
 		$this->load->helper('generatetombol');
-		$this->duwi->listakses($this->session->userdata('user_level'));
-		$this->duwi->cekadmin();
+		// $this->duwi->listakses($this->session->userdata('user_level'));
+		// $this->duwi->cekadmin();
 	}
 	//VARIABEL
 	private $master_tabel="berkas"; //Mendefinisikan Nama Tabel
 	private $id="berkas_id";	//Menedefinisaikan Nama Id Tabel
-	private $default_url="Berkas/Berkas/"; //Mendefinisikan url controller
-	private $default_view="Berkas/Berkas/"; //Mendefinisiakn defaul view
-	private $view="_template/_backend"; //Mendefinisikan Tamplate Root
+	private $default_url="Public/Berkas/"; //Mendefinisikan url controller
+	private $default_view="Public/Berkas/"; //Mendefinisiakn defaul view
+	private $view="_template/_frontend"; //Mendefinisikan Tamplate Root
 	private $path='./upload/berkas/';
 	private $pathformatimport='./template/';
 
@@ -38,7 +38,7 @@ class Berkas extends CI_Controller {
 			$overwriteview=$data['overwriteview'];
 			$menu_submenu=$data['menu_submenu'];
 		}else{
-			$overwriteview="views/Berkas/Berkas/index.php";
+			$overwriteview="views/Public/Berkas/index.php";
 			$menu_submenu='berkas';
 		}
 		$data=array(
